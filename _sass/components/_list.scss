@@ -23,6 +23,14 @@ ul {
 
 	li {
 		padding-left: 0.5em;
+
+		a {
+			color: _palette(fg-bold);
+		}
+		
+		&:before {
+			color: _palette(fg-bold);
+		}
 	}
 
 	&.alt {

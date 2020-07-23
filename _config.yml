@@ -1,19 +1,18 @@
 # Site settings
 title: Trustlines
-subtitle: Docs
+subtitle: Dev Docs
 email: contact@trustlines.foundation
-description: Non-technical documentation for Trustlines Network
+description: Technical documentation for Trustlines Network
 baseurl: "" # the subpath of your site, e.g. /blog
 author: Trustlines Foundation
 street_address: Städtle 38
 city: Vaduz
 zip_code: 9490
 country: Liechtenstein
-tagline: Trustlines Docs
-url: https://docs.trustlines.network
+tagline: Trustlines Dev Docs
+url: https://dev.trustlines.network
 twitter:
   username: TrustlinesFound
-logo: /assets/images/brand/network/png/trustlines-network-logo-red.png
 
 # Social settings
 500px_url:
@@ -46,6 +45,5 @@ highlighter: rouge
 # Sass
 sass:
   sass_dir: _sass
-
 
 exclude: [changelog.md, LICENSE.txt, README.md, Gemfile, Gemfile.lock]
