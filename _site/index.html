@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Trustlines | Technical documentation for Trustlines Network</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Trustlines" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Trustlines" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/","headline":"Trustlines","sameAs":["https://twitter.com/TrustlinesFound","https://reddit.com/r/Trustlines","https://github.com/trustlines-protocol","https://trustlines.network/","https://blog.trustlines.network/","https://forum.trustlines.network/","https://dev.trustlines.network/"],"name":"Trustlines","description":"Technical documentation for Trustlines Network","@type":"WebSite","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+        <!-- Banner -->
+  <section id="banner">
+    <div class="content">
+      <header>
+        <h4>Welcome to Trustlines Developer Docs</h4>
+        <h1>To help you build on Trustlines</h1>
+      </header>
+      <p>Here you can find all kind of technical documentation about Trustlines as well as code related documentation.</p>
+      <ul class="actions">
+      </ul>
+    </div>
+    <span class="image object">
+      <img src="assets/images/identity_element.svg" alt="Trustlines" />
+    </span>
+  </section>
+
+
+        <!-- Section -->
+<section>
+	<header class="major">
+		<h2>Trustlines Protocol</h2>
+	</header>
+	<div class="features">
+		<article>
+			<span class="icon fa-cubes"></span>
+			<div class="content">
+				<h3>Trustlines Blockchain</h3>
+				<p>The Trustlines Blockchain is a minimal viable Proof-of-Stake (mPoS) Ethereum sidechain.</p>
+			</div>
+		</article>
+		<article>
+			<span class="icon fa-desktop"></span>
+			<div class="content">
+				<h3>Client library</h3>
+				<p>The clientlib is a JS-library which makes it easy to build applications on top of the Trustlines Protocol. It provides a high level API to enable applications to interact with the smart contract system on the blockchain via the relay servers.</p>
+			</div>
+		</article>
+		<article>
+			<span class="icon fa-server"></span>
+			<div class="content">
+				<h3>Relay Servers</h3>
+				<p>The Relay Servers are an optional bridge between client apps and the Trustlines blockchain. They offer services which are not feasible to be implemented on-chain or within the client apps. Importantly, Relay servers calculate optimal paths and
+					relay transactions.</p>
+			</div>
+		</article>
+		<article>
+			<span class="icon fa-database"></span>
+			<div class="content">
+				<h3>Smart Contract System</h3>
+				<p>The smart contract system is a collection of solidity contracts deployed on the Trustlines Blockchain. Transfers within the Trustlines Network are executed by the smart contracts. All trustlines (i.e. credit lines and balances between users) are
+					notarized on the Trustlines Blockchain. Furthermore, the smart contracts enforce the rules determining how trustlines can be created, used and updated.</p>
+			</div>
+		</article>
+	</div>
+</section>
+
+<!-- Section -->
+<section>
+	<header class="major">
+		<h2>Latest updates</h2>
+	</header>
+	<div class="posts">
+		<article>
+			<ul>
+				
+<!-- 						<a href="http://localhost:4000/2019/12/30/contracts-release-1-0-0.html" class="image"><img src="assets/images/ann.jpg"/></a> -->
+						December 30, 2019
+						<a href="http://localhost:4000/2019/12/30/contracts-release-1-0-0.html"><h3>Contracts release 1.0.0</h3></a>
+						<p>Contracts version 1.0.0 was just released.</p>
+
+
+							<a href="http://localhost:4000/2019/12/30/contracts-release-1-0-0.html" class="button">Read more ⟶</a>
+				
+			</ul>
+		</article>
+		<article>
+			<ul>
+				
+						<!-- <a href="http://localhost:4000/2019/11/18/contracts-release-0101.html" class="image"><img src="assets/images/ann.jpg"/></a> -->
+						November 18, 2019
+						<a href="http://localhost:4000/2019/11/18/contracts-release-0101.html"><h3>Contracts release 0.10.1</h3></a>
+						<p>Contracts version 0.10.1 was just released.</p>
+
+
+							<a href="http://localhost:4000/2019/11/18/contracts-release-0101.html" class="button">Read more ⟶</a>
+				
+			</ul>
+		</article>
+		<article>
+			<ul>
+				
+						<!-- <a href="http://localhost:4000/2019/11/07/relay-release-0100.html" class="image"><img src="assets/images/ann.jpg"/></a> -->
+						November 07, 2019
+						<a href="http://localhost:4000/2019/11/07/relay-release-0100.html"><h3>Relay release 0.10.0</h3></a>
+						<p>Relay version 0.10.0 was just released.</p>
+
+
+							<a href="http://localhost:4000/2019/11/07/relay-release-0100.html" class="button">Read more ⟶</a>
+				
+			</ul>
+		</article>
+		<article>
+			<ul>
+				
+						<!-- <a href="http://localhost:4000/2019/11/07/contracts-release-0100.html" class="image"><img src="assets/images/ann.jpg"/></a> -->
+						November 07, 2019
+						<a href="http://localhost:4000/2019/11/07/contracts-release-0100.html"><h3>Contracts release 0.10.0</h3></a>
+						<p>Contracts version 0.10.0 was just released.</p>
+
+
+							<a href="http://localhost:4000/2019/11/07/contracts-release-0100.html" class="button">Read more ⟶</a>
+				
+			</ul>
+		</article>
+	</div>
+</section>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

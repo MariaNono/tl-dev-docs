@@ -1,0 +1,3033 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Trustlines Relay API | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Trustlines Relay API" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/relay/relay-api.html" />
+<meta property="og:url" content="http://localhost:4000/docs/relay/relay-api.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Trustlines Relay API" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/relay/relay-api.html","headline":"Trustlines Relay API","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/relay" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a href="https://github.com/trustlines-protocol/relay">
+              Code for relay in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Trustlines Relay API</h1>
+          </header>
+
+          
+
+          <blockquote>
+  <p>The relay component of the trustlines network project provides a REST API.</p>
+</blockquote>
+
+<h2 id="base-endpoint">Base Endpoint</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;protocol&gt;://&lt;host&gt;:&lt;port&gt;/api/v1
+</code></pre></div></div>
+
+<p>You can use the following base endpoint to talk to the currently deployed KOVAN test setup.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://relay0.testnet.trustlines.network/api/v1
+</code></pre></div></div>
+
+<h2 id="response">Response</h2>
+
+<ul>
+  <li>All endpoints return JSON</li>
+  <li>All number values are returned in their smallest unit</li>
+  <li>All ethereum addresses are returned as ERC55 checksum addresses</li>
+  <li>In case of an error, the response of the relay API will have the following format:</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;errorMessage&gt;"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="api-endpoints">API Endpoints</h2>
+
+<h3 id="network-context">Network context</h3>
+
+<ul>
+  <li><a href="#currency-networks-list">Currency networks list</a></li>
+  <li><a href="#currency-network-details">Currency network details</a></li>
+  <li><a href="#users-list-in-currency-network">Users list in currency network</a></li>
+  <li><a href="#user-details-in-currency-network">User details in currency network</a></li>
+  <li><a href="#trustlines-of-user-in-currency-network">Trustlines of user in currency network</a></li>
+  <li><a href="#trustline-between-users-in-currency-network">Trustline between users in currency network</a></li>
+  <li><a href="#spendable-amount-and-path-to-any-user-in-currency-network">Spendable amount and path to any user in currency network</a></li>
+  <li><a href="#transfer-path-in-currency-network">Transfer path in currency network</a></li>
+  <li><a href="#closing-trustline-path-in-currency-network">Closing trustline path in currency network</a></li>
+  <li><a href="#all-events-in-currency-network">All events in currency network</a></li>
+  <li><a href="#events-of-a-user-in-currency-network">Events of a user in currency network</a></li>
+  <li><a href="#accrued-interests-of-user">Accrued interests of user</a></li>
+  <li><a href="#accrued-interests-of-trustline">Accrued interests of trustline</a></li>
+</ul>
+
+<h3 id="user-context">User context</h3>
+
+<ul>
+  <li><a href="#events-of-user-in-all-currency-networks">Events of user in all currency networks</a></li>
+  <li><a href="#transaction-infos-for-user">Transaction infos for user</a></li>
+  <li><a href="#balance-of-user">Balance of user</a></li>
+  <li><a href="#all-trustlines-of-user-in-all-currency-networks">All trustlines</a></li>
+</ul>
+
+<h3 id="other">Other</h3>
+
+<ul>
+  <li><a href="#latest-block-number">Latest block number</a></li>
+  <li><a href="#relay-transaction">Relay transaction</a></li>
+  <li><a href="#relay-meta-transaction">Relay meta transaction</a></li>
+  <li><a href="#fees-for-meta-transaction">Fees for meta transaction</a></li>
+  <li><a href="#deploy-identity-contract">Deploy identity contract</a></li>
+  <li><a href="#get-authorized-identity-factories">Get authorized identity factories</a></li>
+  <li><a href="#get-identity-information">Get identity information</a></li>
+  <li><a href="#get-relay-version">Get relay version</a></li>
+</ul>
+
+<hr />
+
+<h3 id="currency-networks-list">Currency networks list</h3>
+
+<p>Returns all registered currency networks with high-level information.</p>
+
+<h4 id="request">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks
+</code></pre></div></div>
+
+<h4 id="example-request">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks
+</code></pre></div></div>
+
+<h4 id="response-1">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>name</td>
+      <td>string</td>
+      <td>string</td>
+      <td>Full name of the currency network</td>
+    </tr>
+    <tr>
+      <td>abbreviation</td>
+      <td>string</td>
+      <td>string</td>
+      <td>Abbreviated name of currency network</td>
+    </tr>
+    <tr>
+      <td>address</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>Contract address of currency network</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hours"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"abbreviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HOU"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fugger"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"abbreviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FUG"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x55bdaAf9f941A5BB3EacC8D876eeFf90b90ddac9"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="currency-network-details">Currency network details</h3>
+
+<p>Returns detailed information of currency network.</p>
+
+<h4 id="request-1">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:networkAddress
+</code></pre></div></div>
+
+<h4 id="url-parameters">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-1">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE
+</code></pre></div></div>
+
+<h4 id="response-2">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>abbreviation</td>
+      <td>string</td>
+      <td>string</td>
+      <td>Abbreviated name of currency network</td>
+    </tr>
+    <tr>
+      <td>address</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>Contract address of currency network</td>
+    </tr>
+    <tr>
+      <td>decimals</td>
+      <td>int</td>
+      <td>number</td>
+      <td>Decimals specified in currency network</td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td>string</td>
+      <td>string</td>
+      <td>Full name of the currency network</td>
+    </tr>
+    <tr>
+      <td>numUsers</td>
+      <td>int</td>
+      <td>number</td>
+      <td>Total number of users in currency network</td>
+    </tr>
+    <tr>
+      <td>defaultInterestRate</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>The default interest rate for every user in the network</td>
+    </tr>
+    <tr>
+      <td>interestRateDecimals</td>
+      <td>int</td>
+      <td>number</td>
+      <td>Decimals of the interest rate</td>
+    </tr>
+    <tr>
+      <td>customInterests</td>
+      <td>bool</td>
+      <td>bool</td>
+      <td>Whether custom interest rate can be set by users</td>
+    </tr>
+    <tr>
+      <td>preventMediatorInterests</td>
+      <td>bool</td>
+      <td>bool</td>
+      <td>Whether to prevent mediators from paying interest</td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>bool</td>
+      <td>Whether the currency network is frozen</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-1">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"abbreviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HOU"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"decimals"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hours"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"numUsers"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"defaultInterestRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"interestRateDecimals"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"customInterests"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"preventMediatorInterests"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="users-list-in-currency-network">Users list in currency network</h3>
+
+<p>Returns a list of user addresses in a currency network.</p>
+
+<h4 id="request-2">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:networkAddress/users
+</code></pre></div></div>
+
+<h4 id="url-parameters-1">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-2">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users
+</code></pre></div></div>
+
+<h4 id="response-3">Response</h4>
+
+<p><code class="language-plaintext highlighter-rouge">string[]</code> - Array with addresses of users in currency network</p>
+
+<h4 id="example-response-2">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="user-details-in-currency-network">User details in currency network</h3>
+
+<p>Returns detailed information of a user in a currency network.</p>
+
+<h4 id="request-3">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:networkAddress/users/:userAddress
+</code></pre></div></div>
+
+<h4 id="url-parameters-2">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>userAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-3">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce
+</code></pre></div></div>
+
+<h4 id="response-4">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>balance</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>Sum over balances of all non-frozen trustlines user has in currency network</td>
+    </tr>
+    <tr>
+      <td>frozenBalance</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>Sum over balances of all frozen trustlines user has in currency network</td>
+    </tr>
+    <tr>
+      <td>given</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>Sum of all creditlines given by user in currency network</td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>Sum of all creditlines received by user in currency network</td>
+    </tr>
+    <tr>
+      <td>leftGiven</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>given - balance</td>
+    </tr>
+    <tr>
+      <td>leftReceived</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>received + balance</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-3">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1000"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"frozenBalance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4000"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"leftGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3000"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"leftReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="trustlines-of-user-in-currency-network">Trustlines of user in currency network</h3>
+
+<p>Returns a list of trustlines a user has in a currency network.</p>
+
+<h4 id="request-4">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:networkAddress/users/:userAddress/trustlines
+</code></pre></div></div>
+
+<h4 id="url-parameters-3">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>userAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-4">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/trustlines
+</code></pre></div></div>
+
+<h4 id="response-5">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>counterParty</td>
+      <td>string</td>
+      <td>Address of trustline counterparty</td>
+    </tr>
+    <tr>
+      <td>currencyNetwork</td>
+      <td>string</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>string</td>
+      <td>Address of trustline user</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>string</td>
+      <td>Balance of trustline from point of view of user</td>
+    </tr>
+    <tr>
+      <td>given</td>
+      <td>string</td>
+      <td>Creditline given to counterparty</td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>string</td>
+      <td>Creditline received by counterparty</td>
+    </tr>
+    <tr>
+      <td>leftGiven</td>
+      <td>string</td>
+      <td>given - balance</td>
+    </tr>
+    <tr>
+      <td>leftReceived</td>
+      <td>string</td>
+      <td>received + balance</td>
+    </tr>
+    <tr>
+      <td>interestRateGiven</td>
+      <td>string</td>
+      <td>Interest Rate given to counterparty</td>
+    </tr>
+    <tr>
+      <td>interestRateReceived</td>
+      <td>string</td>
+      <td>Interest Rate received from counterparty</td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>Whether the trustlines is frozen</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>string</td>
+      <td>Identifier of trustline</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-4">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xe4332c0bc15bf97933ce54c93af772bb13fad2c4c44e2516eb62d4f6c041e9ab"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"leftReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19848"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"counterParty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xB5A3ad8d5A23e5DDD8b8917F709b01396e4d55e4"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"currencyNetwork"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-152"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"leftGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10152"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x04f9b217b334507c42Ad3b74BFf024c724aBB166"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="trustline-between-users-in-currency-network">Trustline between users in currency network</h3>
+
+<p>Returns a trustline between users A and B in a currency network.</p>
+
+<h4 id="request-5">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:networkAddress/users/:userAddressA/trustlines/:userAddressB
+</code></pre></div></div>
+
+<h4 id="url-parameters-4">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>userAddressA</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user A</td>
+    </tr>
+    <tr>
+      <td>userAddressB</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user B</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-5">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/trustlines/0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b
+</code></pre></div></div>
+
+<h4 id="response-6">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>counterParty</td>
+      <td>string</td>
+      <td>Address of trustline counterparty</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>string</td>
+      <td>Address of trustline user</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>string</td>
+      <td>Balance of trustline from point of view of user (A)</td>
+    </tr>
+    <tr>
+      <td>given</td>
+      <td>string</td>
+      <td>Creditline given to counterparty</td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>string</td>
+      <td>Creditline received by counterparty</td>
+    </tr>
+    <tr>
+      <td>leftGiven</td>
+      <td>string</td>
+      <td>given - balance</td>
+    </tr>
+    <tr>
+      <td>leftReceived</td>
+      <td>string</td>
+      <td>received + balance</td>
+    </tr>
+    <tr>
+      <td>interestRateGiven</td>
+      <td>string</td>
+      <td>Interest Rate given to counterparty</td>
+    </tr>
+    <tr>
+      <td>interestRateReceived</td>
+      <td>string</td>
+      <td>Interest Rate received from counterparty</td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>Whether the trustline is forzen</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>string</td>
+      <td>Identifier of trustline</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-5">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xe4332c0bc15bf97933ce54c93af772bb13fad2c4c44e2516eb62d4f6c041e9ab"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"leftReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19848"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"counterParty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xB5A3ad8d5A23e5DDD8b8917F709b01396e4d55e4"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-152"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"leftGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10152"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x04f9b217b334507c42Ad3b74BFf024c724aBB166"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="spendable-amount-and-path-to-any-user-in-currency-network">Spendable amount and path to any user in currency network</h3>
+
+<p>Returns an estimation on the amount user A can spend to any reachable user B in a currency network.</p>
+
+<h4 id="request-6">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /networks/:network_address/max-capacity-path-info
+</code></pre></div></div>
+
+<h4 id="url-parameters-5">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="data-parameters">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>from</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user who sends transfer</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user who receives transfer</td>
+    </tr>
+    <tr>
+      <td>maxHops</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Upper bound for hops in transfer path</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-6">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"from":"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce","to":"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"}'</span> <span class="se">\</span>
+  https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/max-capacity-path-info
+</code></pre></div></div>
+
+<h4 id="response-7">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>capacity</td>
+      <td>string</td>
+      <td>Estimated capacity of estimated max capacity path</td>
+    </tr>
+    <tr>
+      <td>path</td>
+      <td>string[]</td>
+      <td>Addresses of users on max capacity path</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-6">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"capacity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"0xc257274276a4e539741ca11b590b9447b26a8051"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="transfer-path-in-currency-network">Transfer path in currency network</h3>
+
+<p>Returns the cheapest path and maximal fees for a transfer.</p>
+
+<h4 id="request-7">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /networks/:networkAddress/path-info
+</code></pre></div></div>
+
+<h4 id="url-parameters-6">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="data-parameters-1">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>from</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user who sends transfer</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user who receives transfer</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Transfer amount in smallest unit</td>
+    </tr>
+    <tr>
+      <td>maxFees</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Upper bound for transfer fees</td>
+    </tr>
+    <tr>
+      <td>maxHops</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Upper bound for hops in transfer path</td>
+    </tr>
+    <tr>
+      <td>feePayer</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">sender</code> or <code class="language-plaintext highlighter-rouge">receiver</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-7">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"from":"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce","to":"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b", "value": "1000"}'</span> <span class="se">\</span>
+  https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/path-info
+</code></pre></div></div>
+
+<h4 id="response-8">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>path</td>
+      <td>string[]</td>
+      <td>Addresses of users on transfer path</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>int</td>
+      <td>Transfer amount in smallest unit</td>
+    </tr>
+    <tr>
+      <td>feePayer</td>
+      <td>string</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">sender</code> or <code class="language-plaintext highlighter-rouge">receiver</code></td>
+    </tr>
+    <tr>
+      <td>fees</td>
+      <td>string</td>
+      <td>Maximal transfer fees</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-7">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"feePayer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sender"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="closing-trustline-path-in-currency-network">Closing trustline path in currency network</h3>
+
+<p>This endpoint is used in preparation for closing a trustline. It returns the
+cheapest path, the fees and a value for a payment,
+which reduces the balance to zero. At the moment this only works for negative
+balances.</p>
+
+<h4 id="request-8">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /networks/:networkAddress/close-trustline-path-info
+</code></pre></div></div>
+
+<h4 id="url-parameters-7">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="data-parameters-2">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>from</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user who wants to close a trustline</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user with whom the trustline should be closed</td>
+    </tr>
+    <tr>
+      <td>maxFees</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Upper bound for transfer fees</td>
+    </tr>
+    <tr>
+      <td>maxHops</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Upper bound for hops in transfer path</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-8">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"from":"0x186ec4A5E2c9Ed2B392599843375383D40C94F57","to":"0xaE8446e5ea18F6d7647b28eEf01e568BE672AF6c"}'</span> <span class="se">\</span>
+https://relay0.testnet.trustlines.network/api/v1/networks/0xc5F45B680e81759E3FBc4b4a5A94FBd40BAB3fAd/close-trustline-path-info
+</code></pre></div></div>
+
+<h4 id="response-9">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>path</td>
+      <td>string[]</td>
+      <td>Addresses of users on transfer path</td>
+    </tr>
+    <tr>
+      <td>fees</td>
+      <td>string</td>
+      <td>Estimated transfer fees</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>string</td>
+      <td>Amount to be transferred in smallest unit</td>
+    </tr>
+    <tr>
+      <td>feePayer</td>
+      <td>string</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">sender</code> or <code class="language-plaintext highlighter-rouge">receiver</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-8">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"0x186ec4A5E2c9Ed2B392599843375383D40C94F57"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0x37605B30874452551F959811C5F8662329E51EB2"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0xaE8446e5ea18F6d7647b28eEf01e568BE672AF6c"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0x186ec4A5E2c9Ed2B392599843375383D40C94F57"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"410"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"feePayer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sender"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="all-events-in-currency-network">All events in currency network</h3>
+
+<p>Returns a list of event logs in a currency network.</p>
+
+<h4 id="request-9">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:networkAddress/events?type=:type&amp;fromBlock=:fromBlock
+</code></pre></div></div>
+
+<h4 id="url-parameters-8">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>network</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateCancel</code> or <code class="language-plaintext highlighter-rouge">Transfer</code></td>
+    </tr>
+    <tr>
+      <td>fromBlock</td>
+      <td>int</td>
+      <td>NO</td>
+      <td>Start of block range</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-9">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/events?type=TrustlineUpdate&amp;fromBlock=123456
+</code></pre></div></div>
+
+<h4 id="response-10">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>blockNumber</td>
+      <td>string</td>
+      <td>Number of block</td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>int</td>
+      <td>UNIX timestamp</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateCancel</code> or <code class="language-plaintext highlighter-rouge">Transfer</code></td>
+    </tr>
+    <tr>
+      <td>from</td>
+      <td>string</td>
+      <td>Address of <code class="language-plaintext highlighter-rouge">from</code> user</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>string</td>
+      <td>Address of <code class="language-plaintext highlighter-rouge">to</code> user</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>string</td>
+      <td><code class="language-plaintext highlighter-rouge">sent</code>, <code class="language-plaintext highlighter-rouge">pending</code> or <code class="language-plaintext highlighter-rouge">confirmed</code> depending on block height</td>
+    </tr>
+    <tr>
+      <td>transactionId</td>
+      <td>string</td>
+      <td>Transaction hash</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following additional attributes for <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code> and <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code> events:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>given</td>
+      <td>string</td>
+      <td>Proposed or accepted amount <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>string</td>
+      <td>Proposed or accepted amount <code class="language-plaintext highlighter-rouge">to -&gt; from</code></td>
+    </tr>
+    <tr>
+      <td>interestRateGiven</td>
+      <td>string</td>
+      <td>Proposed or accepted rate of interests <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>interestRateReceived</td>
+      <td>string</td>
+      <td>Proposed or accepted rate of interests <code class="language-plaintext highlighter-rouge">to -&gt; from</code></td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>Proposed or accepted frozen status</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following additional attributes for <code class="language-plaintext highlighter-rouge">Transfer</code> events:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>amount</td>
+      <td>string</td>
+      <td>Transfer amount <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>extraData</td>
+      <td>string</td>
+      <td>extraData as specified in the corresponding transfer</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-9">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997877</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655432</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdateRequest"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xb141aa3baec4e7151d8bd6ecab46d26b1add131e50bcc517c956a7ac979815cd"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997877</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655432</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdateCancel"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xb141aa3baec4e7151d8bd6ecab46d26b1add131e50bcc517c956a7ac979815cd"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997899</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655600</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdate"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x10d4e9acb58d42d433dbc5c995e9a258cd2bb7fe82fedf2ebab82e450d30c643"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">7011809</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524755036</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transfer"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x05c91f6506e78b1ca2413df9985ca7d37d2da5fc076c0b55c5d9eb9fdd7513a6"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"extraData"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x1234"</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="events-of-a-user-in-currency-network">Events of a user in currency network</h3>
+
+<p>Returns a list of event logs of a user in a currency network. This means all events where the given user address is either <code class="language-plaintext highlighter-rouge">from</code> or <code class="language-plaintext highlighter-rouge">to</code>.</p>
+
+<h4 id="request-10">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:network/users/:user/events?type=:type&amp;fromBlock=:fromBlock
+</code></pre></div></div>
+
+<h4 id="example-request-10">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/events?type=TrustlineUpdate&amp;fromBlock=123456
+</code></pre></div></div>
+
+<h4 id="url-parameters-9">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>network</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateCancel</code> or <code class="language-plaintext highlighter-rouge">Transfer</code></td>
+    </tr>
+    <tr>
+      <td>fromBlock</td>
+      <td>int</td>
+      <td>NO</td>
+      <td>Start of block range</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-11">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>blockNumber</td>
+      <td>string</td>
+      <td>Number of block</td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>int</td>
+      <td>UNIX timestamp</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateCancel</code> or <code class="language-plaintext highlighter-rouge">Transfer</code></td>
+    </tr>
+    <tr>
+      <td>from</td>
+      <td>string</td>
+      <td>Address of <code class="language-plaintext highlighter-rouge">from</code> user</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>string</td>
+      <td>Address of <code class="language-plaintext highlighter-rouge">to</code> user</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>string</td>
+      <td><code class="language-plaintext highlighter-rouge">sent</code>, <code class="language-plaintext highlighter-rouge">pending</code> or <code class="language-plaintext highlighter-rouge">confirmed</code> depending on block height</td>
+    </tr>
+    <tr>
+      <td>transactionId</td>
+      <td>string</td>
+      <td>Transaction hash</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following additional attributes for <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code> and <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code> events:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>given</td>
+      <td>string</td>
+      <td>Proposed or accepted amount <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>string</td>
+      <td>Proposed or accepted amount <code class="language-plaintext highlighter-rouge">to -&gt; from</code></td>
+    </tr>
+    <tr>
+      <td>interestRateGiven</td>
+      <td>string</td>
+      <td>Proposed or accepted rate of interests <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>interestRateReceived</td>
+      <td>string</td>
+      <td>Proposed or accepted rate of interests <code class="language-plaintext highlighter-rouge">to -&gt; from</code></td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>Proposed or accepted frozen state</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following additional attributes for <code class="language-plaintext highlighter-rouge">Transfer</code> events:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>amount</td>
+      <td>string</td>
+      <td>Transfer amount <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>extraData</td>
+      <td>string</td>
+      <td>extraData as specified in the corresponding transfer</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-10">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997877</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655432</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdateRequest"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xb141aa3baec4e7151d8bd6ecab46d26b1add131e50bcc517c956a7ac979815cd"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997877</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655432</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdateCancel"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xb141aa3baec4e7151d8bd6ecab46d26b1add131e50bcc517c956a7ac979815cd"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997899</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655600</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdate"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x10d4e9acb58d42d433dbc5c995e9a258cd2bb7fe82fedf2ebab82e450d30c643"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">7011809</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524755036</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transfer"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x05c91f6506e78b1ca2413df9985ca7d37d2da5fc076c0b55c5d9eb9fdd7513a6"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"extraData"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x1234"</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="accrued-interests-of-user">Accrued interests of user</h3>
+
+<p>Returns a list of all accrued interests for user.</p>
+
+<h4 id="request-11">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:network/users/:user/interests?startTime=:timestamp&amp;endTime=:timestamp
+</code></pre></div></div>
+
+<h4 id="example-request-11">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/interests?startTime=1579000000&amp;endTime=1579008836
+</code></pre></div></div>
+
+<h4 id="url-parameters-10">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>network</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>Address of concerned user</td>
+    </tr>
+    <tr>
+      <td>startTime</td>
+      <td>integer</td>
+      <td>NO</td>
+      <td>Start of time window to get list for (default: 0)</td>
+    </tr>
+    <tr>
+      <td>endTime</td>
+      <td>integer</td>
+      <td>NO</td>
+      <td>End of time window to get list for (default: now)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-12">Response</h4>
+
+<p>The response is a list of objects with the following elements:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accruedInterests</td>
+      <td>string</td>
+      <td>array</td>
+      <td>list of accrued interests</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>address</td>
+      <td>string</td>
+      <td>Address of user</td>
+    </tr>
+    <tr>
+      <td>counterparty</td>
+      <td>address</td>
+      <td>string</td>
+      <td>Address of counterparty</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <code class="language-plaintext highlighter-rouge">accuredInterests</code> is a list with the following elements:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>value</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>signed interest accrued viewed from user</td>
+    </tr>
+    <tr>
+      <td>interestRate</td>
+      <td>integer</td>
+      <td>integer</td>
+      <td>interest rate for this accrued interest</td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>integer</td>
+      <td>integer</td>
+      <td>timestamp of accrued interest</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-11">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"accruedInterests"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="nl">"interestRate"</span><span class="p">:</span><span class="w">  </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1579000000</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span><span class="w"> </span><span class="nl">"interestRate"</span><span class="p">:</span><span class="w">  </span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1579001000</span><span class="p">}],</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"counterparty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"accruedInterests"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="nl">"interestRate"</span><span class="p">:</span><span class="w">  </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1579000000</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span><span class="w"> </span><span class="nl">"interestRate"</span><span class="p">:</span><span class="w">  </span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1579001000</span><span class="p">}],</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"counterparty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="accrued-interests-of-trustline">Accrued interests of trustline</h3>
+
+<p>Returns a list of all accrued interests for a trustline in between user and counterparty as seen by user.</p>
+
+<h4 id="request-12">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /networks/:network/users/:user/interests/:counterparty?startTime=:timestamp&amp;endTime=:timestamp
+</code></pre></div></div>
+
+<h4 id="example-request-12">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/networks/0xC0B33D88C704455075a0724AA167a286da778DDE/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/interests/0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320?startTime=1579000000&amp;endTime=1579008836
+</code></pre></div></div>
+
+<h4 id="url-parameters-11">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>network</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>Address of concerned user</td>
+    </tr>
+    <tr>
+      <td>counterparty</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>Address of concerned counterparty</td>
+    </tr>
+    <tr>
+      <td>startTime</td>
+      <td>integer</td>
+      <td>NO</td>
+      <td>Start of time window to get list for (default: 0)</td>
+    </tr>
+    <tr>
+      <td>endTime</td>
+      <td>integer</td>
+      <td>NO</td>
+      <td>End of time window to get list for (default: now)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-13">Response</h4>
+
+<p>The response is a an objects with the following elements:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accruedInterests</td>
+      <td>string</td>
+      <td>array</td>
+      <td>list of accrued interests</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>address</td>
+      <td>string</td>
+      <td>Address of user</td>
+    </tr>
+    <tr>
+      <td>counterparty</td>
+      <td>address</td>
+      <td>string</td>
+      <td>Address of counterparty</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <code class="language-plaintext highlighter-rouge">accuredInterests</code> is a list with the following elements:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>value</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>signed interest accrued viewed from user</td>
+    </tr>
+    <tr>
+      <td>interestRate</td>
+      <td>integer</td>
+      <td>integer</td>
+      <td>interest rate for this accrued interest</td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>integer</td>
+      <td>integer</td>
+      <td>timestamp of accrued interest</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-12">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"accruedInterests"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="nl">"interestRate"</span><span class="p">:</span><span class="w">  </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1579000000</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span><span class="w"> </span><span class="nl">"interestRate"</span><span class="p">:</span><span class="w">  </span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1579001000</span><span class="p">}],</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"counterparty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="events-of-user-in-all-currency-networks">Events of user in all currency networks</h3>
+
+<p>Returns a list of event logs of an user in all currency networks. That means all events where the given user address is either <code class="language-plaintext highlighter-rouge">from</code> or <code class="language-plaintext highlighter-rouge">to</code>.</p>
+
+<h4 id="request-13">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /users/:user/events?type=:type&amp;fromBlock=:fromBlock
+</code></pre></div></div>
+
+<h4 id="example-request-13">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/events?type=TrustlineUpdate&amp;fromBlock=123456
+</code></pre></div></div>
+
+<h4 id="url-parameters-12">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>user</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>NO</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateCancel</code> or <code class="language-plaintext highlighter-rouge">Transfer</code></td>
+    </tr>
+    <tr>
+      <td>fromBlock</td>
+      <td>int</td>
+      <td>NO</td>
+      <td>Start of block range</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-14">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>networkAddress</td>
+      <td>string</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>blockNumber</td>
+      <td>string</td>
+      <td>Number of block</td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>int</td>
+      <td>UNIX timestamp</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>Either <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code>, <code class="language-plaintext highlighter-rouge">TrustlineUpdateCancel</code> or <code class="language-plaintext highlighter-rouge">Transfer</code></td>
+    </tr>
+    <tr>
+      <td>from</td>
+      <td>string</td>
+      <td>Address of <code class="language-plaintext highlighter-rouge">from</code> user</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>string</td>
+      <td>Address of <code class="language-plaintext highlighter-rouge">to</code> user</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>string</td>
+      <td><code class="language-plaintext highlighter-rouge">sent</code>, <code class="language-plaintext highlighter-rouge">pending</code> or <code class="language-plaintext highlighter-rouge">confirmed</code> depending on block height</td>
+    </tr>
+    <tr>
+      <td>transactionId</td>
+      <td>string</td>
+      <td>Transaction hash</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following additional attributes for <code class="language-plaintext highlighter-rouge">TrustlineUpdate</code> and <code class="language-plaintext highlighter-rouge">TrustlineUpdateRequest</code> events:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>given</td>
+      <td>string</td>
+      <td>Proposed or accepted amount <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>string</td>
+      <td>Proposed or accepted amount <code class="language-plaintext highlighter-rouge">to -&gt; from</code></td>
+    </tr>
+    <tr>
+      <td>interestRateGiven</td>
+      <td>string</td>
+      <td>Proposed or accepted rate of interests <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>interestRateReceived</td>
+      <td>string</td>
+      <td>Proposed or accepted rate of interests <code class="language-plaintext highlighter-rouge">to -&gt; from</code></td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>Proposed or accepted frozen status</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following additional attributes for <code class="language-plaintext highlighter-rouge">Transfer</code> events:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>amount</td>
+      <td>string</td>
+      <td>Transfer amount <code class="language-plaintext highlighter-rouge">from -&gt; to</code></td>
+    </tr>
+    <tr>
+      <td>extraData</td>
+      <td>string</td>
+      <td>extraData as specified in the corresponding transfer</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-13">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997877</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655432</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdateRequest"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xb141aa3baec4e7151d8bd6ecab46d26b1add131e50bcc517c956a7ac979815cd"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997877</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655432</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdateCancel"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ff66eb1A824FF9D1bB7e234a2d3B7A3b0345320"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xb141aa3baec4e7151d8bd6ecab46d26b1add131e50bcc517c956a7ac979815cd"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">6997899</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524655600</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TrustlineUpdate"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x10d4e9acb58d42d433dbc5c995e9a258cd2bb7fe82fedf2ebab82e450d30c643"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nl">"networkAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC0B33D88C704455075a0724AA167a286da778DDE"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">7011809</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1524755036</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transfer"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x7Ec3543702FA8F2C7b2bD84C034aAc36C263cA8b"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"confirmed"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x05c91f6506e78b1ca2413df9985ca7d37d2da5fc076c0b55c5d9eb9fdd7513a6"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"extraData"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x1234"</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="balance-of-user">Balance of user</h3>
+
+<p>Returns the balance in ether of the given address.</p>
+
+<h4 id="request-14">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /users/:userAddress/balance
+</code></pre></div></div>
+
+<h4 id="example-request-14">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/balance
+</code></pre></div></div>
+
+<h4 id="url-parameters-13">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>userAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-15">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>balance</td>
+      <td>string</td>
+      <td>string</td>
+      <td>Balance of user in eth</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-14">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.377634165348042492"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="transaction-infos-for-user">Transaction infos for user</h3>
+
+<p>Returns information that is needed to sign a transaction.</p>
+
+<h4 id="request-15">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /users/:userAddress/txinfos
+</code></pre></div></div>
+
+<h4 id="example-request-15">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/users/0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce/txinfos
+</code></pre></div></div>
+
+<h4 id="url-parameters-14">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>userAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-16">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>gasPrice</td>
+      <td>string</td>
+      <td>Gas price</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>string</td>
+      <td>Balance of user in wei</td>
+    </tr>
+    <tr>
+      <td>nonce</td>
+      <td>int</td>
+      <td>Nonce needed for creating a transaction</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-15">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"gasPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2377634165348042492"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="mi">58</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="all-trustlines-of-user-in-all-currency-networks">All Trustlines of user in all currency networks</h3>
+
+<p>Returns a list of trustlines a user has in any currency network.</p>
+
+<h4 id="request-16">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /users/:userAddress/trustlines
+</code></pre></div></div>
+
+<h4 id="url-parameters-15">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>userAddress</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>Address of user</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-16">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/users/0xE56d3f8096c765f29A88f54873a3D177a6c632D0/trustlines
+</code></pre></div></div>
+
+<h4 id="response-17">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>counterParty</td>
+      <td>string</td>
+      <td>Address of trustline counterparty</td>
+    </tr>
+    <tr>
+      <td>currencyNetwork</td>
+      <td>string</td>
+      <td>Address of currency network</td>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>string</td>
+      <td>Address of trustline user</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>string</td>
+      <td>Balance of trustline from point of view of user</td>
+    </tr>
+    <tr>
+      <td>given</td>
+      <td>string</td>
+      <td>Creditline given to counterparty</td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>string</td>
+      <td>Creditline received by counterparty</td>
+    </tr>
+    <tr>
+      <td>leftGiven</td>
+      <td>string</td>
+      <td>given - balance</td>
+    </tr>
+    <tr>
+      <td>leftReceived</td>
+      <td>string</td>
+      <td>received + balance</td>
+    </tr>
+    <tr>
+      <td>interestRateGiven</td>
+      <td>string</td>
+      <td>Interest Rate given to counterparty</td>
+    </tr>
+    <tr>
+      <td>interestRateReceived</td>
+      <td>string</td>
+      <td>Interest Rate received from counterparty</td>
+    </tr>
+    <tr>
+      <td>isFrozen</td>
+      <td>bool</td>
+      <td>Whether the trustlines is frozen</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>string</td>
+      <td>Identifier of trustline</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-16">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xc773E89134957DD5d8eefA1700D147B3eAEEEFC5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"counterParty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xc773E89134957DD5d8eefA1700D147B3eAEEEFC5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"currencyNetwork"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC637Db818131Ea67d19Ea1C9c28559e08b536f6E"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x1d4e46b52805a7440fd41653d7923cbe7c813f3f36776c26df6023bfae94fa4c"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"leftGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"leftReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xE56d3f8096c765f29A88f54873a3D177a6c632D0"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x851c66B2fa4641a7411C6F62e5e905096512772C"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"counterParty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x851c66B2fa4641a7411C6F62e5e905096512772C"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"currencyNetwork"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x03cADF60A8f0eB5B17c5452fe0941Fb8FCc2F984"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x8194d0f524ed5b2056a1f2f432f6445a3c24c03e3a9c9191137c2b2109bb4a2b"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"interestRateGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"interestRateReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"leftGiven"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"leftReceived"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"received"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xE56d3f8096c765f29A88f54873a3D177a6c632D0"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="latest-block-number">Latest block number</h3>
+
+<p>Returns the latest block number.</p>
+
+<h4 id="request-17">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /blocknumber
+</code></pre></div></div>
+
+<h4 id="example-request-17">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/blocknumber
+</code></pre></div></div>
+
+<h4 id="response-18">Response</h4>
+
+<p><code class="language-plaintext highlighter-rouge">int</code> - Latest block number</p>
+
+<h4 id="example-response-17">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">7426584</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="relay-transaction">Relay transaction</h3>
+
+<p>Relays a raw transaction to the blockchain.</p>
+
+<h4 id="request-18">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /relay
+</code></pre></div></div>
+
+<h4 id="data-parameters-3">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>rawTransaction</td>
+      <td>string</td>
+      <td>YES</td>
+      <td>RLP encoded signed transaction</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-18">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"rawTransaction":"&lt;rawTxString&gt;"}'</span> <span class="se">\</span>
+  https://relay0.testnet.trustlines.network/api/v1/relay
+</code></pre></div></div>
+
+<h4 id="response-19">Response</h4>
+
+<p><code class="language-plaintext highlighter-rouge">string</code> - hash of transaction if relayed successfully</p>
+
+<h4 id="example-response-18">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"&lt;tx hash&gt;"</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="fees-for-meta-transaction">Fees for meta transaction</h3>
+
+<p>Get a list of the fees the delegate will accept for the given metaTransaction.</p>
+
+<h4 id="request-19">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /meta-transaction-fees
+</code></pre></div></div>
+
+<h4 id="data-parameters-4">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>metaTransaction</td>
+      <td>object</td>
+      <td>YES</td>
+      <td>MetaTransaction object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The MetaTransaction object must have the following fields:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>from</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>address of identity contract</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the address on which the call of the meta transaction is happening</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>the amount of wei to be sent along from ‘from’ to ‘to’</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>bytes</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the data object encoding the function call including arguments</td>
+    </tr>
+    <tr>
+      <td>nonce</td>
+      <td>int</td>
+      <td>number</td>
+      <td>nonce used for replay protection</td>
+    </tr>
+    <tr>
+      <td>extraData</td>
+      <td>bytes</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>bytes extra data for backwards compatibility</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-19">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"metaTransaction": {"from": "0xF2E246BB76DF876Cef8b38ae84130F4F55De395b", "to": "0x51a240271AB8AB9f9a21C82d9a85396b704E164d", "value": "0", "data": "0x46432830000000000000000000000000000000000000000000000000000000000000000a", "delegationFees": 1, "currencyNetworkOfFees": "0x51a240271AB8AB9f9a21C82d9a85396b704E164d", "nonce": "1", "extraData": "0x", signature": "0x6d2fe56ef6648cb3f0398966ad3b05d891cde786d8074bdac15bcb92ebfa7222489b8eb6ed87165feeede19b031bb69e12036a5fa13b3a46ad0c2c19d051ea9101"}}'</span> <span class="se">\</span>
+  https://relay0.testnet.trustlines.network/api/v1/meta-transaction-fees
+</code></pre></div></div>
+
+<h4 id="response-20">Response</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>delegationFees</td>
+      <td>string</td>
+      <td>Fees to be paid for the meta transaction</td>
+    </tr>
+    <tr>
+      <td>currencyNetworkOfFees</td>
+      <td>string</td>
+      <td>the currency network used to pay the fees of the meta transaction</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-19">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"delegationFees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"currencyNetworkOfFees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x51a240271AB8AB9f9a21C82d9a85396b704E164d"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"delegationFees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"currencyNetworkOfFees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xcbF1153F6e5AC01D363d432e24112e8aA56c55ce"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="relay-meta-transaction">Relay meta transaction</h3>
+
+<p>Relays a meta transaction to the blockchain.</p>
+
+<h4 id="request-20">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /relay-meta-transaction
+</code></pre></div></div>
+
+<h4 id="data-parameters-5">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>metaTransaction</td>
+      <td>object</td>
+      <td>YES</td>
+      <td>MetaTransaction object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The MetaTransaction object must have the following fields:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>to</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the address on which the call of the meta transaction is happening</td>
+    </tr>
+    <tr>
+      <td>from</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>address of identity contract</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>the amount of wei to be sent along from ‘from’ to ‘to’</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>bytes</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the data object encoding the function call including arguments</td>
+    </tr>
+    <tr>
+      <td>delegationFees</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>the fees the delegate will receive for the meta transaction</td>
+    </tr>
+    <tr>
+      <td>currencyNetworkOfFees</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the currency network used to pay the fees of the meta transaction</td>
+    </tr>
+    <tr>
+      <td>nonce</td>
+      <td>int</td>
+      <td>number</td>
+      <td>nonce used for replay protection</td>
+    </tr>
+    <tr>
+      <td>extraData</td>
+      <td>bytes</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>bytes extra data for backwards compatibility</td>
+    </tr>
+    <tr>
+      <td>signature</td>
+      <td>bytes</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>65 bytes containing concatenated. v,r,s of the signature</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-20">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"metaTransaction": {"value": "0", "to": "0x51a240271AB8AB9f9a21C82d9a85396b704E164d", "nonce": "1", "data": "0x46432830000000000000000000000000000000000000000000000000000000000000000a", "from": "0xF2E246BB76DF876Cef8b38ae84130F4F55De395b", "signature": "0x6d2fe56ef6648cb3f0398966ad3b05d891cde786d8074bdac15bcb92ebfa7222489b8eb6ed87165feeede19b031bb69e12036a5fa13b3a46ad0c2c19d051ea9101", "extraData": "0x"}}'</span> <span class="se">\</span>
+  https://relay0.testnet.trustlines.network/api/v1/relay-meta-transaction
+</code></pre></div></div>
+
+<h4 id="response-21">Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"&lt;tx hash&gt;"</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="deploy-identity-contract">Deploy identity contract</h3>
+
+<p>This endpoint can be used to deploy an identity contract to the blockchain.</p>
+
+<h4 id="request-21">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /identities
+</code></pre></div></div>
+
+<h4 id="data-parameters-6">Data Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ownerAddress</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>YES</td>
+      <td>MetaTransaction object</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-21">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"ownerAddress": "0xF2E246BB76DF876Cef8b38ae84130F4F55De395b"}'</span> <span class="se">\</span>
+  https://relay0.testnet.trustlines.network/api/v1/identities
+</code></pre></div></div>
+
+<h4 id="response-22">Response</h4>
+
+<p>The endpoint returns an object with the following fields:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>identity</td>
+      <td>address</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the address of the deployed identity contract</td>
+    </tr>
+    <tr>
+      <td>nextNonce</td>
+      <td>number</td>
+      <td>number</td>
+      <td>the next available nonce</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>contracts balance in wei</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-20">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"identity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x43950642C8685ED8e3Fb89a5C5aeCb12862A87fd"</span><span class="p">,</span><span class="w"> </span><span class="nl">"nextNonce"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="get-authorized-identity-factories">Get authorized identity factories</h3>
+
+<h4 id="request-22">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /factories
+</code></pre></div></div>
+
+<h4 id="example-request-22">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/factories
+</code></pre></div></div>
+
+<h4 id="response-23">Response</h4>
+
+<p><code class="language-plaintext highlighter-rouge">string[]</code>: list of known identity factories through which identity deployment is possible</p>
+
+<h4 id="example-response-21">Example Response</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>["0x43950642C8685ED8e3Fb89a5C5aeCb12862A87fd"]
+</code></pre></div></div>
+
+<h3 id="get-identity-information">Get identity information</h3>
+
+<h4 id="request-23">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /identities/:identity
+</code></pre></div></div>
+
+<h4 id="url-parameters-16">URL Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>identity</td>
+      <td>string prefixed with “0x”</td>
+      <td>YES</td>
+      <td>the address of the deployed identity contract</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-request-23">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/identities/0x2AbCc1389258Dc187DB787E33FD2B99d53695DE3
+</code></pre></div></div>
+
+<h4 id="response-24">Response</h4>
+
+<p>The endpoint returns an object with the following fields:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>JSON Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>identity</td>
+      <td>string</td>
+      <td>string - hex-encoded prefixed with “0x”</td>
+      <td>the address of the deployed identity contract</td>
+    </tr>
+    <tr>
+      <td>nextNonce</td>
+      <td>int</td>
+      <td>number</td>
+      <td>the next available nonce</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>BigInteger</td>
+      <td>string</td>
+      <td>contracts balance in wei</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-response-22">Example Response</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"identity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x2AbCc1389258Dc187DB787E33FD2B99d53695DE3"</span><span class="p">,</span><span class="w"> </span><span class="nl">"nextNonce"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="get-relay-version">Get relay version</h3>
+
+<h4 id="request-24">Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /version
+</code></pre></div></div>
+
+<h4 id="example-request-24">Example Request</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://relay0.testnet.trustlines.network/api/v1/version
+</code></pre></div></div>
+
+<h4 id="response-25">Response</h4>
+
+<p><code class="language-plaintext highlighter-rouge">string</code>: relay version</p>
+
+<h4 id="example-response-23">Example Response</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>relay/v0.7.0
+</code></pre></div></div>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

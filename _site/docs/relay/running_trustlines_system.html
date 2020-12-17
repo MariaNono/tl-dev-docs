@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Running the Trustlines system | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Running the Trustlines system" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/relay/running_trustlines_system.html" />
+<meta property="og:url" content="http://localhost:4000/docs/relay/running_trustlines_system.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Running the Trustlines system" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/relay/running_trustlines_system.html","headline":"Running the Trustlines system","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/relay" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a href="https://github.com/trustlines-protocol/relay">
+              Code for relay in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Running the Trustlines system</h1>
+          </header>
+
+          
+
+          <blockquote>
+  <p>This document explains how to run your own <a href="https://trustlines.network/">trustlines network</a> relay server infrastructure. We will walk you through setting up a relay server and all dependent components. The current documentation is written for a Debian-based Linux system.</p>
+</blockquote>
+
+<p>If you are low on time, you may jump to the description of the <a href="trustlines_docker">docker-compose based setup</a>.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<p>Since the trustlines infrastructure components are implemented in python 3, you need to install relevant dependencies. You will need at least python 3.6.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>build-essential python3-dev python3-venv pkg-config <span class="se">\</span>
+     libssl-dev automake autoconf libtool git libpq-dev
+</code></pre></div></div>
+
+<p>The installation instructions assume you create a dedicated user account and put
+files directly into the user’s home directory. Else, adapt the paths to your needs!</p>
+
+<h3 id="trustlines-blockchain">Trustlines Blockchain</h3>
+
+<p>You need to run our modified parity node, which provides the JSONRPC API to the relay
+server and the indexer. The documentation on how to run it can be found on the
+<a href="../blockchain/tlbc">Blockchain Overview page</a></p>
+<h3 id="contracts">Contracts</h3>
+<p>The <a href="https://github.com/trustlines-protocol/contracts">trustlines-contracts
+repository</a> contains the
+solidity contracts to be deployed on the blockchain and a commandline tool to deploy the contracts. The <a href="../contracts/contracts_deployment">how to deploy the
+contracts guide</a> contains more information on how to deploy the contracts.
+The tool will return the addresses of the deployed contracts. You need to provide that information to the relay server with as json file <code class="language-plaintext highlighter-rouge">addresses.json</code> with the following format:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"networks"</span><span class="p">:</span><span class="w">
+  </span><span class="p">[</span><span class="err">&lt;list</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">currency</span><span class="w"> </span><span class="err">network</span><span class="w"> </span><span class="err">addresses&gt;</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"unwEth"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;address</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">unw_eth_contract&gt;</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"exchange"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;address</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">exchange&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>For the already deployed contracts on the trustlines blockchain use this file:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"networks"</span><span class="p">:</span><span class="w">
+  </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"0x9750bdB86B32DCaeFEAea4f29857D52C8d848860"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"0xe4D3cEB3d59B6Fa4a39C8D9525c84C79057C1e29"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"0xd75C9C8a79D6a85d4923b7C16BAb144cC9BB48e4"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We assume from now on that the contracts have already been deployed
+and that the <code class="language-plaintext highlighter-rouge">addresses.json</code> file has been copied to the user’s home directory.</p>
+
+<h3 id="postgresql">PostgreSQL</h3>
+<p>The trustlines system uses a PostgreSQL database to store some user data and to
+keep a synchronized view on the relevant state from the blockchain.</p>
+
+<p>Install PostgreSQL with:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>postgresql
+</code></pre></div></div>
+
+<p>After this, a database user must be created. Please use a real password:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-u</span> postgres psql <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+CREATE USER trustlines WITH PASSWORD 'choose-a-password-here';
+ALTER USER trustlines CREATEDB;
+</span><span class="no">EOF
+</span></code></pre></div></div>
+
+<p>Next, the postgres environment should be configured for the account running
+the relay server:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="o">&gt;&gt;</span>~/.pgpass <span class="s1">'localhost:5432:*:trustlines:choose-a-password-here'</span><span class="p">;</span> <span class="nb">chmod </span>0600 ~/.pgpass
+<span class="nb">cat</span> <span class="o">&gt;&gt;</span>~/.bashrc <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+export PGUSER=trustlines
+export PGHOST=localhost
+export PGDATABASE=trustlinesdb
+</span><span class="no">EOF
+</span></code></pre></div></div>
+
+<p>After logging in again, in order to have the environment variables set, the user
+should be able to create the database:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>createdb trustlinesdb
+</code></pre></div></div>
+
+<p>The rest of this tutorial assumes that the user running the relay and
+py-eth-index related commands has a working postgresql environment configured.
+All programs consider the PG* environment variables and will read ~/.pgpass for
+information about passwords. The <a href="#py-eth-index">py-eth-index section</a> describes
+how to create the trustlines specific tables.</p>
+
+<h3 id="py-eth-index">Py-eth-index</h3>
+<p>The <a href="https://github.com/trustlines-protocol/py-eth-index">py-eth-index repository</a>
+contains a helper program that synchronizes the relevant information from the
+blockchain into a postgresql database.</p>
+
+<h4 id="installation-of-py-eth-index">Installation of py-eth-index</h4>
+
+<p>Clone the git repository:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~
+git clone https://github.com/trustlines-protocol/py-eth-index
+</code></pre></div></div>
+<p>Let’s create a virtualenv for this repository:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> venv ~/opt/py-eth-index<span class="p">;</span> ~/opt/py-eth-index/bin/pip <span class="nb">install</span> <span class="nt">-U</span> pip
+</code></pre></div></div>
+<p>and install py-eth-index</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/py-eth-index
+~/opt/py-eth-index/bin/pip <span class="nb">install</span> <span class="nt">-c</span> constraints.txt <span class="nt">-r</span> requirements.txt
+~/opt/py-eth-index/bin/pip <span class="nb">install</span> <span class="nt">-c</span> constraints.txt <span class="nb">.</span>
+</code></pre></div></div>
+<h4 id="initializing-the-database">Initializing the database</h4>
+<p>After the database has been created, it must be initialized. This can be done with the following command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/opt/py-eth-index/bin/ethindex createtables
+</code></pre></div></div>
+<h4 id="importing-the-abis">Importing the ABIs</h4>
+<p>We need to import the ABIs from the trustline-contracts. Trustlines-contracts is
+installed as a dependency of the relay server. Please run the following only
+after you have installed the relay server.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> ~/opt/relay/trustlines-contracts/build/contracts.json ~
+~/opt/py-eth-index/bin/ethindex importabi
+</code></pre></div></div>
+
+<h4 id="importing-events">Importing events</h4>
+<p>The following command will start importing all relevant events into the postgres
+database:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/opt/py-eth-index/bin/ethindex runsync
+</code></pre></div></div>
+<p>This program will run forever.</p>
+
+<h3 id="relay-server">Relay server</h3>
+<h4 id="prerequisites-for-the-installation">Prerequisites for the installation</h4>
+
+<ul>
+  <li>Python 3.6 or up</li>
+  <li>pip</li>
+</ul>
+
+<p>Installation on Ubuntu</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>build-essential python3-dev libsecp256k1-dev python3-virtualenv virtualenv pkg-config libssl-dev automake autoconf libtool git
+</code></pre></div></div>
+
+<h4 id="installation-of-the-relay-server">Installation of the relay server</h4>
+
+<p>Clone the git repository, create a virtualenv and install into
+that.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~
+git clone https://github.com/trustlines-protocol/relay
+python3 <span class="nt">-m</span> venv ~/opt/relay<span class="p">;</span> ~/opt/relay/bin/pip <span class="nb">install</span> <span class="nt">-U</span> pip
+<span class="nb">cd</span> ~/relay<span class="p">;</span>
+~/opt/relay/bin/pip <span class="nb">install</span> <span class="nt">-c</span> constraints.txt <span class="nt">-r</span> requirements.txt
+~/opt/relay/bin/pip <span class="nb">install</span> <span class="nt">-c</span> constraints.txt <span class="nb">.</span>
+</code></pre></div></div>
+
+<h4 id="running-the-relay-server">Running the relay server</h4>
+
+<p>The relay server needs the addresses of the deployed contracts. In case you’ve
+deployed your own contracts, please copy addresses.json to <code class="language-plaintext highlighter-rouge">~</code>.</p>
+
+<p>We will also need a config file. You can use the one from the git checkout:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> ~/relay/config.toml ~
+</code></pre></div></div>
+
+<p>The relay server reads both files from the current directory per default,
+so we need to start it where those files have been copied to:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~
+~/opt/relay/bin/tl-relay
+</code></pre></div></div>
+
+<p>However, this behaviour can be changed, you can check the options with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~
+~/opt/relay/bin/tl-relay <span class="nt">--help</span>
+</code></pre></div></div>
+
+<p>The relay server needs access to the parity node and the PostgreSQL database.
+<code class="language-plaintext highlighter-rouge">ethindex runsync</code> also has to be running for a fully functioning system.</p>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

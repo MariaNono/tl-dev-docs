@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Validator Proxy contracts.json | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Validator Proxy contracts.json" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/contracts/validator_proxy_contracts_json.html" />
+<meta property="og:url" content="http://localhost:4000/docs/contracts/validator_proxy_contracts_json.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Validator Proxy contracts.json" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/contracts/validator_proxy_contracts_json.html","headline":"Validator Proxy contracts.json","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/contracts" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a
+              href="https://github.com/trustlines-protocol/contracts"> Code for contracts in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Validator Proxy contracts.json</h1>
+          </header>
+
+          
+
+          <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"ValidatorProxy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"abi"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uint256"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"validators"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"getValidators"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address[]"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"systemAddress"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"numberOfValidators"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uint256"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"newValidators"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address[]"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"updateValidators"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nonpayable"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isValidator"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bool"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"_validators"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address[]"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nonpayable"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"constructor"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"devdoc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"methods"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"bytecode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x6080604052600180546001600160a01b0319166002600160a01b0317905534801561002957600080fd5b506040516106ab3803806106ab8339810180604052602081101561004c57600080fd5b81019080805164010000000081111561006457600080fd5b8201602081018481111561007757600080fd5b815185602082028301116401000000008211171561009457600080fd5b505080519093506100ae925060029150602084019061010d565b5060005b81518110156101065760016000808484815181106100cc57fe5b6020908102919091018101516001600160a01b03168252810191909152604001600020805460ff19169115159190911790556001016100b2565b5050610199565b828054828255906000526020600020908101928215610162579160200282015b8281111561016257825182546001600160a01b0319166001600160a01b0390911617825560209092019160019091019061012d565b5061016e929150610172565b5090565b61019691905b8082111561016e5780546001600160a01b0319168155600101610178565b90565b610503806101a86000396000f3fe608060405234801561001057600080fd5b50600436106100725760003560e01c8063d6832ea911610050578063d6832ea914610110578063e71731e41461012a578063facd743b146101cf57610072565b806335aa2e4414610077578063b7ab4db5146100b0578063d3e848f114610108575b600080fd5b6100946004803603602081101561008d57600080fd5b5035610209565b604080516001600160a01b039092168252519081900360200190f35b6100b8610230565b60408051602080825283518183015283519192839290830191858101910280838360005b838110156100f45781810151838201526020016100dc565b505050509050019250505060405180910390f35b610094610293565b6101186102a2565b60408051918252519081900360200190f35b6101cd6004803603602081101561014057600080fd5b81019060208101813564010000000081111561015b57600080fd5b82018360208201111561016d57600080fd5b8035906020019184602083028401116401000000008311171561018f57600080fd5b9190808060200260200160405190810160405280939291908181526020018383602002808284376000920191909152509295506102a8945050505050565b005b6101f5600480360360208110156101e557600080fd5b50356001600160a01b03166103d6565b604080519115158252519081900360200190f35b6002818154811061021657fe5b6000918252602090912001546001600160a01b0316905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561028857602002820191906000526020600020905b81546001600160a01b0316815260019091019060200180831161026a575b505050505090505b90565b6001546001600160a01b031681565b60025490565b6001546001600160a01b0316321461030b576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252604981526020018061048f6049913960600191505060405180910390fd5b60005b6002548110156103665760008060006002848154811061032a57fe5b6000918252602080832091909101546001600160a01b031683528201929092526040019020805460ff191691151591909117905560010161030e565b5060005b81518110156103be57600160008084848151811061038457fe5b6020908102919091018101516001600160a01b03168252810191909152604001600020805460ff191691151591909117905560010161036a565b5080516103d29060029060208401906103eb565b5050565b60006020819052908152604090205460ff1681565b82805482825590600052602060002090810192821561044d579160200282015b8281111561044d578251825473ffffffffffffffffffffffffffffffffffffffff19166001600160a01b0390911617825560209092019160019091019061040b565b5061045992915061045d565b5090565b61029091905b8082111561045957805473ffffffffffffffffffffffffffffffffffffffff1916815560010161046356fe4f6e6c79207468652073797374656d20616464726573732063616e20626520726573706f6e7369626c6520666f72207468652063616c6c206f6620746869732066756e6374696f6e2ea165627a7a72305820a6911408304e0b6f50417988a66324da491bddd180ad1bf1ce16d88f6fec09af0029"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"deployedBytecode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x608060405234801561001057600080fd5b50600436106100725760003560e01c8063d6832ea911610050578063d6832ea914610110578063e71731e41461012a578063facd743b146101cf57610072565b806335aa2e4414610077578063b7ab4db5146100b0578063d3e848f114610108575b600080fd5b6100946004803603602081101561008d57600080fd5b5035610209565b604080516001600160a01b039092168252519081900360200190f35b6100b8610230565b60408051602080825283518183015283519192839290830191858101910280838360005b838110156100f45781810151838201526020016100dc565b505050509050019250505060405180910390f35b610094610293565b6101186102a2565b60408051918252519081900360200190f35b6101cd6004803603602081101561014057600080fd5b81019060208101813564010000000081111561015b57600080fd5b82018360208201111561016d57600080fd5b8035906020019184602083028401116401000000008311171561018f57600080fd5b9190808060200260200160405190810160405280939291908181526020018383602002808284376000920191909152509295506102a8945050505050565b005b6101f5600480360360208110156101e557600080fd5b50356001600160a01b03166103d6565b604080519115158252519081900360200190f35b6002818154811061021657fe5b6000918252602090912001546001600160a01b0316905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561028857602002820191906000526020600020905b81546001600160a01b0316815260019091019060200180831161026a575b505050505090505b90565b6001546001600160a01b031681565b60025490565b6001546001600160a01b0316321461030b576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252604981526020018061048f6049913960600191505060405180910390fd5b60005b6002548110156103665760008060006002848154811061032a57fe5b6000918252602080832091909101546001600160a01b031683528201929092526040019020805460ff191691151591909117905560010161030e565b5060005b81518110156103be57600160008084848151811061038457fe5b6020908102919091018101516001600160a01b03168252810191909152604001600020805460ff191691151591909117905560010161036a565b5080516103d29060029060208401906103eb565b5050565b60006020819052908152604090205460ff1681565b82805482825590600052602060002090810192821561044d579160200282015b8281111561044d578251825473ffffffffffffffffffffffffffffffffffffffff19166001600160a01b0390911617825560209092019160019091019061040b565b5061045992915061045d565b5090565b61029091905b8082111561045957805473ffffffffffffffffffffffffffffffffffffffff1916815560010161046356fe4f6e6c79207468652073797374656d20616464726573732063616e20626520726573706f6e7369626c6520666f72207468652063616c6c206f6620746869732066756e6374696f6e2ea165627a7a72305820a6911408304e0b6f50417988a66324da491bddd180ad1bf1ce16d88f6fec09af0029"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"compiler"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5.8+commit.23d335f2"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Solidity"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"abi"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uint256"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"validators"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"getValidators"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address[]"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"systemAddress"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"numberOfValidators"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uint256"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"newValidators"</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address[]"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"updateValidators"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nonpayable"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"constant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isValidator"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bool"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"_validators"</span><span class="p">,</span><span class="w">
+                                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address[]"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"payable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"stateMutability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nonpayable"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"constructor"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"devdoc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"methods"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"userdoc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"methods"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+                    </span><span class="nl">"notice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This contract gives access to an up to date validator set on chain, that can be used by any other contracts. Its validator set is to be updated by validators contracts when the system address calls finalizeChange(). This way, the `validators` array in this contract should remain correct throughout forks."</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"compilationTarget"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"/home/oizo/tl-protocol/blockchain/contracts/contracts/tlc-validator/ValidatorProxy.sol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ValidatorProxy"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"evmVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"petersburg"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"libraries"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+                </span><span class="nl">"optimizer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"runs"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"remappings"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"/home/oizo/tl-protocol/blockchain/contracts/contracts/tlc-validator/ValidatorProxy.sol"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"keccak256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xeec906ae78272ff69eb23879fd3b2a3d2044e1cbc3bafa79f0c017b3d57edb77"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"urls"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="s2">"bzzr://539f038353920d87103a59af4bca78786a19b7aea916b3af9e2c5e8f79d3d52c"</span><span class="w">
+                    </span><span class="p">]</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"userdoc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"methods"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nl">"notice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This contract gives access to an up to date validator set on chain, that can be used by any other contracts. Its validator set is to be updated by validators contracts when the system address calls finalizeChange(). This way, the `validators` array in this contract should remain correct throughout forks."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

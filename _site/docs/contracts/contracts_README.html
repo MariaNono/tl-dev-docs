@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Trustlines Smart Contract Platform | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Trustlines Smart Contract Platform" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/contracts/contracts_README.html" />
+<meta property="og:url" content="http://localhost:4000/docs/contracts/contracts_README.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Trustlines Smart Contract Platform" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/contracts/contracts_README.html","headline":"Trustlines Smart Contract Platform","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/contracts" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a
+              href="https://github.com/trustlines-protocol/contracts"> Code for contracts in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Trustlines Smart Contract Platform</h1>
+          </header>
+
+          
+
+          <p>This documentation explains how to deploy Trustlines smart contracts,
+for creating your own currency network and trustlines exchange.
+The exchange functionality is not fully supported at this point.
+The current documentation is written for an Ubuntu Linux system.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Python 3.6 or up and dev dependencies</li>
+  <li><a href="https://pip.pypa.io/en/stable/">pip</a></li>
+  <li>git</li>
+</ul>
+
+<p>Run</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>build-essential python3-dev python3-virtualenv virtualenv pkg-config libssl-dev automake autoconf libtool git make
+</code></pre></div></div>
+
+<p>One of the dependencies used is the secp256k1 library. If you’re using
+python 3.5 on linux you can skip the following step, since pypi contains
+binary packages for secp256k1. If not, you’ll have to run the following
+to install the secp256k1 C library:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/bitcoin-core/secp256k1.git
+<span class="nb">cd </span>secp256k1
+./autogen.sh
+./configure <span class="nt">--enable-module-recovery</span>
+make
+<span class="nb">sudo </span>make <span class="nb">install
+sudo </span>ldconfig
+</code></pre></div></div>
+
+<h3 id="deployment-tools">Deployment tools</h3>
+
+<p>This section runs through the tooling necessary for deploying the
+contracts.</p>
+
+<h5 id="ethereum-client">Ethereum client</h5>
+
+<p>To deploy the Trustlines smart contracts, you need access to an ethereum client,
+e.g. geth or parity, which is synced to the chain you want to use. The
+client needs to expose the JSON RPC endpoint. Additionally you need an
+account with enough ether to pay for the contract deployment.</p>
+
+<h5 id="deployment-setup">Deployment setup</h5>
+
+<p>Please run <code class="language-plaintext highlighter-rouge">pip install trustlines-contracts-deploy</code> to install the <code class="language-plaintext highlighter-rouge">tl-deploy</code>
+tool from PyPI. Solidity itself isn’t needed anymore.</p>
+
+<h5 id="tl-deploy">tl-deploy</h5>
+
+<p>The tool <code class="language-plaintext highlighter-rouge">tl-deploy</code> allows you to deploy the relevant contracts.</p>
+
+<p>Use <code class="language-plaintext highlighter-rouge">tl-deploy --help</code> to find out about the relevant commands or read
+further in the <a href="contracts_deployment">deploy documentation</a>.</p>
+
+<h3 id="development">Development</h3>
+
+<p>To start developing install the development dependencies into a venv
+with <code class="language-plaintext highlighter-rouge">pip install -c constraints.txt -r requirements.txt</code></p>
+
+<p>Download and install the solidity compiler solc into bin for compiling the
+contracts</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="nt">-o</span> <span class="nv">$HOME</span>/bin/solc https://github.com/ethereum/solidity/releases/download/v0.5.8/solc-static-linux <span class="o">&amp;&amp;</span> <span class="nb">chmod</span> +x <span class="nv">$HOME</span>/bin/solc
+</code></pre></div></div>
+
+<h5 id="compiling">Compiling</h5>
+
+<p>The contracts can be compiled with <code class="language-plaintext highlighter-rouge">make compile</code>. This will create a
+file <code class="language-plaintext highlighter-rouge">contracts.json</code> with all the compiled contracts.</p>
+
+<h5 id="testing">Testing</h5>
+
+<p>For testing we use pytest with an ethereum tester plugin. The tests can
+be run with <code class="language-plaintext highlighter-rouge">pytest</code>. Please not that this will recompile all contracts
+automatically, there’s no need to call <code class="language-plaintext highlighter-rouge">make compile</code> manually.</p>
+
+<h5 id="installation">Installation</h5>
+
+<p>Please run <code class="language-plaintext highlighter-rouge">make install</code> to install the trustlines-contracts-bin and
+trustlines-contracts-deploy tool from the git checkout.</p>
+
+<h3 id="change-log">Change log</h3>
+
+<p>See <a href="https://github.com/trustlines-protocol/contracts/blob/master/CHANGELOG.rst">CHANGELOG</a>.</p>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

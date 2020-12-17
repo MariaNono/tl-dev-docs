@@ -1,0 +1,420 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Client library guides | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Client library guides" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/clientlib/clientlib-guides.html" />
+<meta property="og:url" content="http://localhost:4000/docs/clientlib/clientlib-guides.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Client library guides" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/clientlib/clientlib-guides.html","headline":"Client library guides","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/clientlib" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a
+              href="https://github.com/trustlines-protocol/clientlib"> Code for clientlib in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Client library guides</h1>
+          </header>
+
+          
+
+          <blockquote>
+  <p>Here you can find useful guides on how to use the core features of the trustlines-clientlib.</p>
+</blockquote>
+
+<ul>
+  <li><a href="#note-on-numbers-and-fees">Note on numbers and fees</a></li>
+  <li><a href="#create-user--wallet">Create user / wallet</a></li>
+  <li><a href="#discover-currency-networks">Discover currency networks</a></li>
+  <li><a href="#set-up-trustline">Set up trustline</a></li>
+  <li><a href="#transfer">Send transfer</a></li>
+</ul>
+
+<h2 id="note-on-numbers-and-fees">Note on numbers and fees</h2>
+
+<h3 id="number-format">Number format</h3>
+
+<p>The trustlines-clientlib returns numbers in the following format</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Amount</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">raw</span><span class="p">:</span> <span class="nx">string</span> <span class="c1">// = value * decimals^10</span>
+  <span class="na">value</span><span class="p">:</span> <span class="nx">string</span> <span class="c1">// = raw / decimals^10</span>
+  <span class="na">decimals</span><span class="p">:</span> <span class="nx">number</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The representation <code class="language-plaintext highlighter-rouge">raw</code> is the number in its smallest unit, whereas <code class="language-plaintext highlighter-rouge">value</code> is the representation in its biggest unit.</p>
+
+<h3 id="fees">Fees</h3>
+
+<p>There are currently three different types of fees returned by the trustlines-clientlib, when preparing transactions.</p>
+
+<h4 id="transaction-fees---ethfees">Transaction fees - <code class="language-plaintext highlighter-rouge">ethFees</code></h4>
+
+<p>This kind of fees only occur, when the <code class="language-plaintext highlighter-rouge">walletType</code> in the initial configuration is set to <code class="language-plaintext highlighter-rouge">ethers</code>.
+They are denominated in the native cryptocurrency or coins, e.g. <code class="language-plaintext highlighter-rouge">TLC</code>, <code class="language-plaintext highlighter-rouge">Test TLC</code>, <code class="language-plaintext highlighter-rouge">ETH</code>, etc.</p>
+
+<h4 id="delegation-fees---delegationfees">Delegation fees - <code class="language-plaintext highlighter-rouge">delegationFees</code></h4>
+
+<p>If the <code class="language-plaintext highlighter-rouge">walletType</code> is set to <code class="language-plaintext highlighter-rouge">identity</code>, the library uses meta-transactions that are relayed, i.e delegated, by the relay server.
+The relay server operator pays for the occurring transaction fees and might want to be compensated for this service.
+These fees are denominated in a Trustlines Currency.</p>
+
+<h4 id="network-fees---maxfees">Network fees - <code class="language-plaintext highlighter-rouge">maxFees</code></h4>
+
+<p>When transfers are mediated through other users within the network, network fees might occur, which are also denominated in a Trustlines Currency.</p>
+
+<h2 id="create-user--wallet">Create user / wallet</h2>
+
+<p>To be able to interact with the trustlines protocol a user, i.e. wallet, is needed.
+You therefore have to create an instance and load it into the library.
+The wallet manages your key pair and is used for cryptographically signing transactions, thus enabling the establishment of trustlines and transfers.
+Depending on the initial configuration of the <code class="language-plaintext highlighter-rouge">TLNetwork</code> instance, you can create either a new instance of type <code class="language-plaintext highlighter-rouge">ethers</code> or type <code class="language-plaintext highlighter-rouge">identity</code>.
+The former type is based on the wallet object of the <a href="https://docs.ethers.io/ethers.js/html/">ethers.js</a> library, whereas the second type uses an <a href="https://github.com/trustlines-protocol/contracts/blob/master/docs/deploy.md#deploy-identity-contracts">identity contract</a> to enable meta-transactions.</p>
+
+<h3 id="create-instance-of-type-ethers">Create instance of type <code class="language-plaintext highlighter-rouge">ethers</code></h3>
+
+<p>Note that a user of type <code class="language-plaintext highlighter-rouge">ethers</code> can not use <a href="https://github.com/trustlines-protocol/contracts/blob/master/docs/deploy.md#deploy-identity-contracts">meta-transactions</a>.
+The user therefore needs some coins (<a href="https://explore.tlbc.trustlines.foundation/">TLC</a>, <a href="https://explore.laika.trustlines.foundation/">Test TLC</a>, … ), depending on the connected relay server and blockchain, before being able to execute a transaction.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">laika</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TLNetwork</span><span class="p">({</span>
+  <span class="na">protocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">wsProtocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">wss</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">relay0.testnet.trustlines.network</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/api/v1</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">walletType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ethers</span><span class="dl">'</span>
+<span class="p">})</span>
+
+<span class="kd">const</span> <span class="nx">newEthersUser</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">laika</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">create</span><span class="p">()</span>
+<span class="k">await</span> <span class="nx">laika</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">loadFrom</span><span class="p">(</span><span class="nx">newEthersUser</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="create-instance-of-type-identity">Create instance of type <code class="language-plaintext highlighter-rouge">identity</code></h3>
+
+<p>A user of type <code class="language-plaintext highlighter-rouge">identity</code> makes use of meta-transactions.
+Therefore the addresses of the deployed <a href="https://github.com/trustlines-protocol/contracts/blob/master/contracts/identity/IdentityProxyFactory.sol">identity factory</a> and <a href="https://github.com/trustlines-protocol/contracts/blob/master/contracts/identity/Identity.sol">implementation</a> contracts have to be set.
+An additional step of deploying the identity contract of the newly created user is also necessary.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">laika</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TLNetwork</span><span class="p">({</span>
+  <span class="na">protocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">wsProtocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">wss</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">relay0.testnet.trustlines.network</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/api/v1</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">walletType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">identity</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">identityFactoryAddress</span><span class="p">:</span> <span class="dl">'</span><span class="s1">0x8D2720877Fa796E3C3B91BB91ad6CfcC07Ea249E</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">identityImplementationAddress</span><span class="p">:</span> <span class="dl">'</span><span class="s1">0x8BEe92893D3ec62e5B3EBBe4e536A60Fd9AFc9D7</span><span class="dl">'</span>
+<span class="p">})</span>
+
+<span class="kd">const</span> <span class="nx">newIdentityUser</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">laika</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">create</span><span class="p">()</span>
+<span class="k">await</span> <span class="nx">laika</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">loadFrom</span><span class="p">(</span><span class="nx">newIdentityUser</span><span class="p">)</span>
+
+<span class="c1">// Additional step to deploy the identity contract of newly created user</span>
+<span class="kd">const</span> <span class="nx">txHash</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">laika</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">deployIdentity</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="discover-currency-networks">Discover currency networks</h2>
+
+<p>The client library provides interfaces for retrieving information on deployed currency networks.</p>
+
+<h3 id="general-information">General information</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// All currency networks the relay server knows about</span>
+<span class="kd">const</span> <span class="nx">allDeployedCurrencyNetworks</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork</span><span class="p">.</span><span class="nx">currencyNetwork</span><span class="p">.</span><span class="nx">getAll</span><span class="p">()</span>
+
+<span class="c1">// Detailed information on specific currency network</span>
+<span class="kd">const</span> <span class="nx">detailedInformation</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork</span><span class="p">.</span><span class="nx">currencyNetwork</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">(</span><span class="dl">'</span><span class="s1">0x...</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="c1">// List of all users in specific currency network</span>
+<span class="kd">const</span> <span class="nx">userAddresses</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork</span><span class="p">.</span><span class="nx">currencyNetwork</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">(</span><span class="dl">'</span><span class="s1">0x...</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="user-context">User context</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">networkAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0x...</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">userAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0x...</span><span class="dl">'</span>
+
+<span class="c1">// Overview of user in specific currency network</span>
+<span class="kd">const</span> <span class="nx">userOverview</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork</span><span class="p">.</span><span class="nx">currencyNetwork</span><span class="p">.</span><span class="nx">getUserOverview</span><span class="p">(</span>
+  <span class="nx">networkAddress</span><span class="p">,</span>
+  <span class="nx">userAddress</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="set-up-trustline">Set up trustline</h2>
+
+<p>To set up a trustline, make sure that a user instance is loaded into the library.</p>
+
+<h3 id="1-request-for-establishing-a-trustline">1. Request for establishing a trustline</h3>
+
+<p>Trustlines consist of bi-directional credit agreements.
+That means, that they have to be accepted by both parties.
+The first step to establish a trustline is therefore to create an initial request or proposal to the counterparty.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">tlNetwork1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TLNetwork</span><span class="p">()</span>
+
+<span class="c1">// Create and/or load user 1 ...</span>
+
+<span class="kd">const</span> <span class="nx">networkAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0xf8E191d2cd72Ff35CB8F012685A29B31996614EA</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">counterpartyAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0xcE2D6f8bc55A61428D32947bC9Bc7F2DE1640B18</span><span class="dl">'</span>
+
+<span class="c1">// Prepare a transaction to request a trustline update</span>
+<span class="kd">const</span> <span class="p">{</span>
+  <span class="nx">rawTx</span><span class="p">,</span>
+  <span class="nx">ethFees</span><span class="p">,</span>
+  <span class="nx">delegationFees</span>
+<span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork1</span><span class="p">.</span><span class="nx">trustline</span><span class="p">.</span><span class="nx">prepareUpdate</span><span class="p">(</span>
+  <span class="nx">networkAddress</span><span class="p">,</span>
+  <span class="nx">counterpartyAddress</span><span class="p">,</span>
+  <span class="mi">100</span><span class="p">,</span> <span class="c1">// Proposed credit limit given to counterparty</span>
+  <span class="mi">200</span> <span class="c1">// Proposed credit limit received from counterparty</span>
+<span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Transaction fees: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">ethFees</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Delegation fees: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">delegationFees</span><span class="p">)</span>
+
+<span class="c1">// Sign and relay the transaction</span>
+<span class="kd">const</span> <span class="nx">txHash</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork1</span><span class="p">.</span><span class="nx">trustline</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="nx">rawTx</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Transaction hash: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">txHash</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The initiator creates a request where he is willing to <strong>lend</strong> a maximal denomination of <code class="language-plaintext highlighter-rouge">100</code> to the user with the address <code class="language-plaintext highlighter-rouge">counterpartyAddress</code> in the currency network with the address <code class="language-plaintext highlighter-rouge">networkAddress</code>.
+He also proposes that he is willing to <strong>owe</strong> a maximal denomination of <code class="language-plaintext highlighter-rouge">200</code> to the counterparty.
+If the <code class="language-plaintext highlighter-rouge">walletType</code> is <code class="language-plaintext highlighter-rouge">ethers</code>, <code class="language-plaintext highlighter-rouge">delegationFees</code> are <code class="language-plaintext highlighter-rouge">undefined</code>.</p>
+
+<h3 id="2-accepting-a-trustline-request">2. Accepting a trustline request</h3>
+
+<p>In the next step the counterparty has to accept the request. Note that in the example below the loaded user is the counterparty of step 1.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">tlNetwork2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TLNetwork</span><span class="p">()</span>
+
+<span class="c1">// Create and/or load user 2 ...</span>
+
+<span class="kd">const</span> <span class="nx">networkAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0xf8E191d2cd72Ff35CB8F012685A29B31996614EA</span><span class="dl">'</span>
+
+<span class="c1">// Retrieve latest request from step 1</span>
+<span class="kd">const</span> <span class="nx">requests</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork2</span><span class="p">.</span><span class="nx">trustline</span><span class="p">.</span><span class="nx">getRequests</span><span class="p">(</span><span class="nx">networkAddress</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">latestRequest</span> <span class="o">=</span> <span class="nx">requests</span><span class="p">[</span><span class="nx">requests</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+<span class="kd">const</span> <span class="nx">initiatorAddress</span> <span class="o">=</span> <span class="nx">latestRequest</span><span class="p">.</span><span class="k">from</span>
+<span class="kd">const</span> <span class="nx">creditlineGivenToInitiator</span> <span class="o">=</span> <span class="nx">latestRequest</span><span class="p">.</span><span class="nx">received</span><span class="p">.</span><span class="nx">value</span>
+<span class="kd">const</span> <span class="nx">creditlineReceivedFromInitiator</span> <span class="o">=</span> <span class="nx">latestRequest</span><span class="p">.</span><span class="nx">given</span><span class="p">.</span><span class="nx">value</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">rawTx</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork2</span><span class="p">.</span><span class="nx">trustline</span><span class="p">.</span><span class="nx">prepareAccept</span><span class="p">(</span>
+  <span class="nx">networkAddress</span><span class="p">,</span>
+  <span class="nx">initiatorAddress</span><span class="p">,</span>
+  <span class="nx">creditlineGivenToInitiator</span><span class="p">,</span>
+  <span class="nx">creditlineReceivedFromInitiator</span>
+<span class="p">)</span>
+
+<span class="c1">// sign and relay the transaction</span>
+<span class="kd">const</span> <span class="nx">txHash</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork2</span><span class="p">.</span><span class="nx">trustline</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="nx">rawTx</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Transaction hash: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">txHash</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The counterparty of step 1 first fetches all trustline requests in the currency network. The <code class="language-plaintext highlighter-rouge">prepareAccept</code> function is then called where the attributes <code class="language-plaintext highlighter-rouge">given</code> and <code class="language-plaintext highlighter-rouge">received</code> have to be from the point of view of the caller. So in our case the counterparty or receiver of the initial request.</p>
+
+<p><strong>NOTE: All numerical values have to be provided in their largest unit. For example, if the currency network has two decimals, the values have to be in a format like <code class="language-plaintext highlighter-rouge">1.25</code>.</strong></p>
+
+<h2 id="transfer">Transfer</h2>
+
+<p>The requirement for a successful trustline transfer is a path with enough capacity from the sender to the receiver in the currency network. It is also to mention that the sender is always the loaded user.</p>
+
+<h3 id="transferring-trustlines-currency">Transferring trustlines currency</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">networkAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0xf8E191d2cd72Ff35CB8F012685A29B31996614EA</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">receiverAddress</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0xcE2D6f8bc55A61428D32947bC9Bc7F2DE1640B18</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">rawTx</span><span class="p">,</span> <span class="nx">maxFees</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">feePayer</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork</span><span class="p">.</span><span class="nx">payment</span><span class="p">.</span><span class="nx">prepare</span><span class="p">(</span>
+  <span class="nx">networkAddress</span><span class="p">,</span>
+  <span class="nx">receiverAddress</span><span class="p">,</span>
+  <span class="mi">1</span>
+<span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Transfer path:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Network fees:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">maxFees</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Fee payer:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">feePayer</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">txHash</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tlNetwork</span><span class="p">.</span><span class="nx">payment</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="nx">raw</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Transaction hash: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">txHash</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

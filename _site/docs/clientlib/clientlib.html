@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Client library introduction | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Client library introduction" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/clientlib/clientlib.html" />
+<meta property="og:url" content="http://localhost:4000/docs/clientlib/clientlib.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Client library introduction" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/clientlib/clientlib.html","headline":"Client library introduction","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/clientlib" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a
+              href="https://github.com/trustlines-protocol/clientlib"> Code for clientlib in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Client library introduction</h1>
+          </header>
+
+          
+
+          <blockquote>
+  <p>A TypeScript/JavaScript library for interacting with the <a href="https://trustlines.foundation/protocol">Trustlines Protocol</a>.</p>
+</blockquote>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="install-via-package-manager">Install via package manager</h3>
+
+<p>We publish the trustlines-clientlib to npm as a ES6 module.</p>
+
+<h4 id="using-npm">Using npm</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm i trustlines-clientlib
+</code></pre></div></div>
+
+<h4 id="using-yarn">Using yarn</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yarn add trustlines-clientlib
+</code></pre></div></div>
+
+<h3 id="build-from-source">Build from source</h3>
+
+<p>If you want to build the library from source run</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:trustlines-protocol/clientlib.git
+<span class="nb">cd </span>clientlib
+yarn <span class="o">&amp;&amp;</span> yarn build
+</code></pre></div></div>
+
+<p>This will create three different builds:</p>
+
+<ul>
+  <li>ES6 module in <code class="language-plaintext highlighter-rouge">./lib-esm</code></li>
+  <li>CommonJS module in <code class="language-plaintext highlighter-rouge">./lib</code></li>
+  <li>Bundled JS injectable into browser in <code class="language-plaintext highlighter-rouge">./_bundles</code></li>
+</ul>
+
+<h2 id="get-started">Get started</h2>
+
+<p>We assume the usage of the <code class="language-plaintext highlighter-rouge">trustlines-clientlib</code> ES6 module in the following.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>To start using the trustlines-clientlib you first have to configure the <a href="../relay/relay_server">relay server</a> you want to connect to.
+You can either connect to a local develop relay server or use publicly available ones.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">TLNetwork</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">trustlines-clientlib</span><span class="dl">'</span>
+
+<span class="c1">// Instance using a relay connected to the Laika Testnet</span>
+<span class="kd">const</span> <span class="nx">laika</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TLNetwork</span><span class="p">({</span>
+  <span class="na">protocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">wsProtocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">wss</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">relay0.testnet.trustlines.network</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/api/v1</span><span class="dl">'</span>
+  <span class="c1">// ...</span>
+<span class="p">})</span>
+
+<span class="c1">// Instance using a relay connected to the TLBC</span>
+<span class="kd">const</span> <span class="nx">tlbc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TLNetwork</span><span class="p">({</span>
+  <span class="na">protocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">wsProtocol</span><span class="p">:</span> <span class="dl">'</span><span class="s1">wss</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;url&gt;</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// TODO There is no public TLBC relay yet</span>
+  <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/api/v1</span><span class="dl">'</span>
+  <span class="c1">// ...</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="example-usage">Example usage</h3>
+
+<p>This library is a promise-based library.
+So every asynchronous call will return a native JavaScript promise.
+If an error occurs the library will throw it.
+The caller has to handle it appropriately.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">networks</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">laika</span><span class="p">.</span><span class="nx">currencyNetwork</span><span class="p">.</span><span class="nx">getAll</span><span class="p">()</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Caught error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="read-our-documentation-for-more">Read our <a href="">documentation</a> for more</h3>
+
+<h2 id="run-tests">Run Tests</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># All tests</span>
+yarn <span class="nb">test</span>
+
+<span class="c"># Unit tests</span>
+yarn <span class="nb">test</span>:unit
+
+<span class="c"># Integration tests</span>
+yarn <span class="nb">test</span>:integration
+
+<span class="c"># end2end tests</span>
+yarn <span class="nb">test</span>:e2e
+</code></pre></div></div>
+
+<h3 id="note-on-end2end-tests">Note on end2end tests</h3>
+
+<p>You have to have all components of the trustlines protocol running.
+A convenient way to achieve this is by using our <a href="https://github.com/trustlines-protocol/end2end">end2end</a> setup.</p>
+
+<h2 id="running-injected-web3-example">Running injected web3 example</h2>
+
+<p>To run the example make sure to have <a href="https://metamask.io/">MetaMask</a> installed and connected to a JSON RPC.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn serve
+</code></pre></div></div>
+
+<p>This serves the injected web3 example app on <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8080</code>. You can find the app under <code class="language-plaintext highlighter-rouge">./examples/injected-web3</code>.</p>
+
+<h2 id="change-log">Change log</h2>
+
+<p>See <a href="https://github.com/trustlines-protocol/clientlib/blob/master/CHANGELOG.md">CHANGELOG</a></p>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

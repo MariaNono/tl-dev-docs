@@ -1,0 +1,515 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Trustlines Blockchain | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Trustlines Blockchain" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/blockchain/tlbc.html" />
+<meta property="og:url" content="http://localhost:4000/docs/blockchain/tlbc.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Trustlines Blockchain" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/blockchain/tlbc.html","headline":"Trustlines Blockchain","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/blockchain" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a
+              href="https://github.com/trustlines-protocol/blockchain"> Code for blockchain in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Trustlines Blockchain</h1>
+          </header>
+
+          
+
+          <ul>
+  <li><a href="#the-trustlines-blockchain-infrastructure">The Trustlines Blockchain Infrastructure</a>
+    <ul>
+      <li><a href="#tlbc-and-laika">TLBC and Laika</a></li>
+      <li><a href="#system-requirements">System Requirements</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#setup-with-the-quickstart-script">Setup With the Quickstart Script</a></li>
+      <li><a href="#setup-with-docker">Setup With Docker</a>
+        <ul>
+          <li><a href="#blockchain-node">Blockchain Node</a></li>
+          <li><a href="#netstats-client">Netstats Client</a></li>
+          <li><a href="#monitor">Monitor</a></li>
+          <li><a href="#bridge">Bridge</a></li>
+        </ul>
+      </li>
+      <li><a href="#setup-without-docker">Setup Without Docker</a></li>
+    </ul>
+  </li>
+  <li><a href="#development">Development</a>
+    <ul>
+      <li><a href="#build-own-image">Build Own Image</a></li>
+      <li><a href="#upload-image">Upload Image</a></li>
+      <li><a href="#running-tests-on-contracts">Running Tests on Contracts</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="the-trustlines-blockchain-infrastructure">The Trustlines Blockchain Infrastructure</h2>
+
+<p>Nodes of the Trustlines Blockchain run various applications:</p>
+
+<ul>
+  <li>The node of the blockchain itself</li>
+  <li>The monitor that checks if validators act honestly (optional)</li>
+  <li>The bridge between Ethereum and the Trustlines Blockchain (only run by validators)</li>
+  <li>The netstats client to report the node state to <code class="language-plaintext highlighter-rouge">https://netstats.tlbc.trustlines.foundation</code> (optional)</li>
+</ul>
+
+<p>There are multiple ways to set each of these up. The most straightforward one by far is via our interactive quickstart
+script. Finer control can be achieved by starting the components individually as Docker containers. Finally, it is also
+possible to avoid Docker altogether and run everything directly on the host machine.</p>
+
+<p>Before starting the installation process, please have a look at the following
+sections on the distinction between Laika and the Trustlines Blockchain, system
+requirements, and security.</p>
+
+<h3 id="tlbc-and-laika">TLBC and Laika</h3>
+
+<p>There are two different blockchains related to this project. The first one is
+a testnet called Laika. The second one is considered to be the main net and
+called the Trustlines Blockchain or TLBC. The instructions within this document
+primarily focus on the Trustlines Blockchain.</p>
+
+<h3 id="system-requirements">System Requirements</h3>
+
+<p>Based on the experiences we have had on our long-running testnet Laika, we recommend at least 4GB of memory and 20GB of SSD
+storage.</p>
+
+<p>Validators should make sure their node has a high uptime: Otherwise, they miss out on potential revenue and harm the
+network by increasing average block intervals and time to finality.</p>
+
+<p>For block validation and creation, it is essential to make sure your host system has the correct time configuration. On
+most systems, this should be the case by default. You can check the settings with <code class="language-plaintext highlighter-rouge">timedatectl</code> (look for
+<code class="language-plaintext highlighter-rouge">"System clock synchronized: yes"</code>). For more information, see for example the corresponding
+<a href="https://help.ubuntu.com/lts/serverguide/NTP.html">Ubuntu help page</a>.</p>
+
+<p>For the Docker installation modes, <a href="https://docker.com">Docker</a> needs to be installed and configured.
+For the quickstart mode, <a href="https://docs.docker.com/compose/">docker-compose</a> needs to be installed as well.
+You must have at least version <a href="https://github.com/docker/compose/releases/tag/1.18.0"><code class="language-plaintext highlighter-rouge">1.18.0</code></a> of <code class="language-plaintext highlighter-rouge">docker-compose</code>.
+Please refer to the official documentation and make sure your user is added to the <code class="language-plaintext highlighter-rouge">docker</code> user group if you cannot
+access root permissions to run containers.</p>
+
+<h3 id="security">Security</h3>
+
+<p>For validators it is crucial to safely back up their private key. If they lose their key, they will not be able to</p>
+
+<ul>
+  <li>create any blocks or earn block rewards or</li>
+  <li>withdraw their stake on the main chain once it is unlocked.</li>
+</ul>
+
+<p>Furthermore, it is advisable to keep the amount of funds stored in the validator account small by regularly sending the
+newly earned income to a different account (e.g., a cold wallet stored on a different machine).</p>
+
+<h3 id="setup-with-the-quickstart-script">Setup With the Quickstart Script</h3>
+
+<p>The quickstart script will set up the blockchain node and the monitor as well as optionally the bridge and netstats
+clients. It allows importing a private key in order to act as a validator. In addition, it will start a
+<a href="https://hub.docker.com/r/containrrr/watchtower">watchtower</a> to automatically update the Docker containers when newer versions
+become available (e.g. for bug fixes or network forks).</p>
+
+<p>To fetch and run the most recent version of the quickstart script for the Trustlines Blockchain, execute the following command on your machine:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash &lt;<span class="o">(</span>curl <span class="nt">-L</span> quickstart.tlbc.trustlines.foundation<span class="o">)</span>
+</code></pre></div></div>
+
+<p>If you want a quickstart setup for the Laika testnet, use the following command instead:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash &lt;<span class="o">(</span>curl <span class="nt">-L</span> quickstart.laika.trustlines.foundation<span class="o">)</span>
+</code></pre></div></div>
+
+<p>The script is interactive and will ask you which components to set up. Once the
+setup is complete, the various components will run in the background in the form
+of Docker containers. Configuration and chain data can be found in the
+<code class="language-plaintext highlighter-rouge">tlbc</code> directory placed in the current working directory (<code class="language-plaintext highlighter-rouge">trustlines</code> in case of a Laika setup). It is possible
+to customize the own setup by editing those configuration files. This goes for
+the configuration of the different components, as well as the composition of the
+Docker containers. If an optional component has not been set up on an earlier
+run, it can be added later by executing the quickstart script again.</p>
+
+<p>Executing the script again is safe: No configuration will be overridden without
+asking, in case the user has changed them itself. If conflicting configuration
+updates occur, they are shown to the user who can ask to see a diff of the
+changes.</p>
+
+<h3 id="setup-with-docker">Setup With Docker</h3>
+
+<p>A more explicit way of setting up the various components is starting the Docker containers manually as described here.
+To keep commands as concise as possible, only the most basic options are provided. You might want to set additional
+ones, e.g., container names or restart policies.</p>
+
+<p>Alternatively, you could also use the quickstart script and adjust the setup afterwards with commands similar to the
+following ones.</p>
+
+<h4 id="blockchain-node">Blockchain Node</h4>
+
+<p>The blockchain image is a standard Parity client with a custom configuration for the Trustlines Blockchain. It also
+accepts a few additional command line options as described in the help message:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">--rm</span> trustlines/tlbc-node:release <span class="nt">--help</span>
+
+
+ NAME
+   Parity Wrapper
+
+ SYNOPSIS
+   parity_wrapper.sh <span class="o">[</span><span class="nt">-r</span><span class="o">]</span> <span class="o">[</span>role] <span class="o">[</span><span class="nt">-a</span><span class="o">]</span> <span class="o">[</span>address] <span class="o">[</span><span class="nt">-p</span><span class="o">]</span> <span class="o">[</span>arguments]
+
+ ...
+</code></pre></div></div>
+
+<p>Before starting the node, create a Docker network to conveniently allow other containers to easily connect to it:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create network-tlbc
+</code></pre></div></div>
+
+<p>When running the node, you typically want to forward necessary ports to the host so that Parity can find and connect to
+peers. Additionally, you might want to mount some volumes to persist configuration and chain data. For instance, to run
+a non-validator node:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> tlbc/databases/tlbc tlbc/config tlbc/enode tlbc/shared
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> tlbc-node <span class="nt">--network</span> network-tlbc <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/databases/tlbc:/data <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/config:/config/custom <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/enode:/config/network <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/shared:/shared/ <span class="se">\</span>
+    <span class="nt">-p</span> 30302:3030r <span class="nt">-p</span> 30302:30302/udp <span class="se">\</span>
+    trustlines/tlbc-node:release
+</code></pre></div></div>
+
+<p>If you are a validator, this sequence of commands will supply Parity with your keystore file, password, and address so
+that it can produce blocks:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> tlbc/databases/tlbc tlbc/config/keys/tlbc tlbc/enode tlbc/shared
+<span class="nv">$ </span><span class="nb">cp</span> /path/to/your/keystore/file.json tlbc/config/keys/tlbc/account.json
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"&lt;passphrase_for_keystore_file&gt;"</span> <span class="o">&gt;</span> tlbc/config/pass.pwd
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> tlbc-node <span class="nt">--network</span> network-tlbc <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/databases/tlbc:/data <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/config:/config/custom <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/enode:/config/network <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/shared:/shared/ <span class="se">\</span>
+    <span class="nt">-p</span> 30302:30302 <span class="nt">-p</span> 30302:30302/udp <span class="se">\</span>
+    trustlines/tlbc-node:release
+</code></pre></div></div>
+
+<h4 id="netstats-client">Netstats Client</h4>
+
+<p>The netstats client reports the state of your node to the
+<a href="https://netstats.tlbc.trustlines.foundation/">netstats page</a> that gives a rough overview of the current network state.
+It is an optional component which helps the community by providing information on your running node to a central server.</p>
+
+<p>To participate, you first need to request credentials managed by the Trustlines Foundation. Please email
+<code class="language-plaintext highlighter-rouge">netstats@trustlines.foundation</code> to do so.</p>
+
+<p>Once you have your credentials, create a file <code class="language-plaintext highlighter-rouge">tlbc/netstats-env</code> with the following contents:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">WS_USER</span><span class="o">=</span>username-as-provided-by-the-foundation
+<span class="nv">WS_PASSWORD</span><span class="o">=</span>password-as-provided-by-the-foundation
+<span class="nv">INSTANCE_NAME</span><span class="o">=</span>please-choose-a-nice-name-here
+</code></pre></div></div>
+
+<p>If you want to be publicly displayed as a validator, add the following line at the end:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">HIDE_VALIDATOR_STATUS</span><span class="o">=</span><span class="nb">false</span>
+</code></pre></div></div>
+
+<p>Now, the netstats client can be started with</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> netstats-client <span class="nt">--network</span> network-tlbc <span class="se">\</span>
+    <span class="nt">--env-file</span> tlbc/netstats-env <span class="se">\</span>
+    <span class="nt">-e</span> <span class="nv">RPC_HOST</span><span class="o">=</span>tlbc-node <span class="se">\</span>
+    <span class="nt">-e</span> <span class="nv">RPC_PORT</span><span class="o">=</span>8545 <span class="se">\</span>
+    trustlines/netstats-client:release
+</code></pre></div></div>
+
+<h4 id="monitor">Monitor</h4>
+
+<p>The monitor watches the blockchain and makes sure that validators are online and do not equivocate. Every node in the
+network should run it and users should regularly check for reports of misbehaving validators.</p>
+
+<p>Assuming the blockchain node was configured as described above, this command will start the monitor:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> tlbc/monitor/reports tlbc/monitor/state
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> tlbc-monitor <span class="nt">--network</span> network-tlbc <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/shared:/config <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/monitor/state:/state <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/monitor/reports:/reports <span class="se">\</span>
+    trustlines/tlbc-monitor:release <span class="se">\</span>
+    <span class="nt">-c</span> /config/trustlines-spec.json <span class="nt">-r</span> /reports <span class="nt">-d</span> /state <span class="se">\</span>
+    <span class="nt">-u</span> http://tlbc-node:8545
+</code></pre></div></div>
+
+<h4 id="bridge">Bridge</h4>
+
+<p>Validators of the Trustlines Blockchain have to run the bridge that converts TLN tokens on the Ethereum chain to TLC
+tokens on the Trustlines Blockchain. Non-validators should not run a bridge node.</p>
+
+<p>The bridge requires an Ethereum mainnet node which can be a light client. To start one, execute</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create network-ethereum
+<span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> tlbc/databases/mainnet
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> mainnet-node <span class="nt">--network</span> network-ethereum <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/databases/mainnet:/data/database <span class="se">\</span>
+    <span class="nt">--user</span> root <span class="se">\</span>
+    ethereum/client-go:stable <span class="se">\</span>
+    <span class="nt">--rpc</span> <span class="nt">--rpcaddr</span> 0.0.0.0 <span class="nt">--nousb</span> <span class="nt">--ipcdisable</span> <span class="nt">--syncmode</span> light <span class="se">\</span>
+    <span class="nt">--datadir</span> /data/database <span class="nt">--rpccorsdomain</span> <span class="k">*</span> <span class="nt">--rpcvhosts</span><span class="o">=</span><span class="k">*</span>
+</code></pre></div></div>
+
+<p>Now, write a configuration file for the bridge node and store it in <code class="language-plaintext highlighter-rouge">tlbc/bridge-config.toml</code>:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[foreign_chain]</span>
+<span class="py">rpc_url</span> <span class="p">=</span> <span class="s">"&lt;http://mainnet-node:8545&gt;"</span>
+<span class="py">token_contract_address</span> <span class="p">=</span> <span class="s">"0x679131F591B4f369acB8cd8c51E68596806c3916"</span>
+<span class="py">bridge_contract_address</span> <span class="p">=</span> <span class="s">"0x18BDC736b23Ff7294BED9fa988a1443357C7B0ed"</span>
+<span class="py">event_fetch_start_block_number</span> <span class="p">=</span> <span class="mi">8932341</span>
+
+<span class="nn">[home_chain]</span>
+<span class="py">rpc_url</span> <span class="p">=</span> <span class="s">"&lt;http://tlbc-node:8545&gt;"</span>
+<span class="py">bridge_contract_address</span> <span class="p">=</span> <span class="s">"0x0000000000000000000000000000000000000401"</span>
+<span class="py">event_fetch_start_block_number</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="nn">[validator_private_key]</span>
+<span class="py">keystore_path</span> <span class="p">=</span> <span class="s">"/config/keys/tlbc/account.json</span><span class="err">
+keystore_password_path</span> <span class="err">=</span> <span class="s">"/config/pass.pwd"</span>
+</code></pre></div></div>
+
+<p>Note that the keystore path is not an actual path on the host machine, but rather in the bridge container.
+The container will have to connect to both of the Docker networks and access the config directory.
+Therefore, the command looks like this:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">--name</span> bridge-client <span class="nt">--network</span> network-tlbc <span class="nt">--network</span> network-ethereum <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/config:/config <span class="se">\</span>
+    <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/tlbc/bridge-config.toml:/config/bridge-config.toml <span class="se">\</span>
+    trustlines/bridge:release <span class="se">\</span>
+    <span class="nt">-c</span> /config/bridge-config.toml
+</code></pre></div></div>
+
+<h3 id="setup-without-docker">Setup Without Docker</h3>
+
+<p>We refer to the documentation of the individual components:</p>
+
+<ul>
+  <li><a href="https://wiki.parity.io/Parity-Ethereum">Parity</a></li>
+  <li><a href="https://github.com/trustlines-protocol/ethstats-client">Netstats</a></li>
+  <li><a href="https://github.com/trustlines-protocol/tlbc-monitor">Monitor</a></li>
+  <li><a href="https://github.com/trustlines-protocol/blockchain/tree/master/tools/bridge">Bridge</a></li>
+</ul>
+
+<p>For the Trustlines Blockchain node, make sure it uses the correct chain
+specification file (<code class="language-plaintext highlighter-rouge">./chain/tlbc/tlbc-spec.json</code>), that the right TCP and UDP
+ports are used (30302), and that the JSON RPC APIs <code class="language-plaintext highlighter-rouge">web3</code>, <code class="language-plaintext highlighter-rouge">eth</code>, and <code class="language-plaintext highlighter-rouge">net</code> are
+enabled.</p>
+
+<h2 id="development">Development</h2>
+
+<h3 id="build-own-image">Build Own Image</h3>
+
+<p>To build the <em>Docker</em> image, checkout this repository and run <code class="language-plaintext highlighter-rouge">docker build</code> with your preferred tag name. As the context of
+the build must be the project root, the path to the <code class="language-plaintext highlighter-rouge">Dockerfile</code> has to be specified manually.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://github.com/trustlines-protocol/blockchain
+<span class="nv">$ </span>docker build <span class="nt">-f</span> ./chain/laika/Dockerfile <span class="nt">-t</span> MY_TAGNAME ./chain
+<span class="nv">$ </span>docker run ... MY_TAGNAME ...
+</code></pre></div></div>
+
+<h3 id="running-tests-on-contracts">Running Tests on Contracts</h3>
+
+<p>First, install the solidity compiler <code class="language-plaintext highlighter-rouge">solc</code> for compiling the contracts. You
+can follow the <a href="https://solidity.readthedocs.io/en/v0.5.8/installing-solidity.html">official installation
+documentation</a>. Make sure that you install the version <code class="language-plaintext highlighter-rouge">0.5.8</code>.
+From the root directory of the repository you can run the tests by calling <code class="language-plaintext highlighter-rouge">make test contracts</code>. This will create a virtual Python environment, install the
+dependencies, compile the contracts and run the tests.</p>
+
+<h2 id="accesslaikatrustlinesfoundation">access.laika.trustlines.foundation</h2>
+
+<p>The Trustlines Foundation hosts a publically accessible node for the
+Laika Testnet.</p>
+
+<p>You can access it via the following URL:
+<a href="https://access.laika.trustlines.foundation">https://access.laika.trustlines.foundation</a></p>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

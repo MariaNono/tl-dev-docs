@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Running Trustlines via docker-compose | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Running Trustlines via docker-compose" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Technical documentation for Trustlines Network" />
+<meta property="og:description" content="Technical documentation for Trustlines Network" />
+<link rel="canonical" href="http://localhost:4000/docs/relay/trustlines_docker.html" />
+<meta property="og:url" content="http://localhost:4000/docs/relay/trustlines_docker.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Running Trustlines via docker-compose" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/docs/relay/trustlines_docker.html","headline":"Running Trustlines via docker-compose","description":"Technical documentation for Trustlines Network","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <br>
+
+        <div id="component_page">
+          <span><a href="https://github.com/trustlines-protocol/relay" class="icon fa-github page_layout" target="_blank"><span class="label"></span></a></span><span class="component_page_text"><a href="https://github.com/trustlines-protocol/relay">
+              Code for relay in GitHub</a></span>
+        </div>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Running Trustlines via docker-compose</h1>
+          </header>
+
+          
+
+          <p><a href="https://github.com/trustlines-protocol/relay/tree/master/docker/trustlines">This directory</a> contains the files needed to start a trustlines system via
+docker-compose. Following these setup instructions will give you a
+system, where you can:</p>
+<ul>
+  <li>connect to a trustlines laika node via JSONRPC on port 8545</li>
+  <li>use the trustlines laika node as a metamask backend</li>
+  <li>connect to a relay server on port 5000 and interact with currency
+networks running on chain</li>
+</ul>
+
+<p>Please be aware that you additionally might have to firewall the
+installed system if you don’t want to expose those services.</p>
+
+<h2 id="services">Services</h2>
+<p>The docker-compose file contains service definitions for the following services:</p>
+
+<ul>
+  <li>
+    <p>db: A service running a postgres server. The postgres files will be
+stored in the <code class="language-plaintext highlighter-rouge">postgres-data</code> docker volume.</p>
+  </li>
+  <li>
+    <p>tlbc: A service running a modified parity node for the trustlines
+blockchain. The blockchain data will be stored in the
+<code class="language-plaintext highlighter-rouge">blockchain-data</code> docker volume.</p>
+  </li>
+  <li>
+    <p>index: A service running py-eth-index, which synchronizes certain
+information from parity into the postgres database.</p>
+  </li>
+  <li>
+    <p>relay: The relay server itself.</p>
+  </li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+<p>We need to do some initial setup and configuration for the system to work. You
+need to provide the <code class="language-plaintext highlighter-rouge">addresses.json</code> file, which should be put in the directory
+alongside the <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> file.</p>
+
+<p>This directory contains working example files for contracts already
+deployed on the laika blockchain. If you deploy your own contracts,
+please adapt <code class="language-plaintext highlighter-rouge">addresses.json</code> accordingly.</p>
+
+<h3 id="fetch-docker-image">Fetch docker image</h3>
+<p>Let’s first build and fetch all of the images that we will need
+without starting any services with the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">--no-start</span>
+</code></pre></div></div>
+
+<h3 id="generate-keys">Generate keys</h3>
+
+<p>The relay server either needs a parity node with an unlocked account
+or it needs a key to sign transactions itself. We will use the latter
+method.</p>
+
+<p>Please generate a keystore file by running the following command. It
+will ask for a password.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/here <span class="nt">--entrypoint</span> /opt/relay/bin/deploy-tools trustlines/relay generate-keystore <span class="nt">--keystore-path</span> /here/keystore.json
+</code></pre></div></div>
+
+<p>We also need to store the password in clear text. Please create a file
+‘keystore-password.txt’ containing only the password on the first
+line.</p>
+
+<p>Of course you can also use an existing keyfile, but please do not
+reuse a keyfile from a validator node.</p>
+
+<h3 id="copy-compiled-contracts">Copy compiled contracts</h3>
+
+<p>The relay server image containts the file ‘contracts.json’, which
+contains the compiled currency network contracts. We will need
+this file for the index service.</p>
+
+<p>Please copy them to the current directory with:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose run <span class="nt">--rm</span> <span class="nt">--no-deps</span> <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/here <span class="nt">--entrypoint</span> /bin/bash relay <span class="nt">-c</span> <span class="s2">"cp /opt/relay/trustlines-contracts/build/contracts.json /here"</span>
+</code></pre></div></div>
+
+<h3 id="setup-initial-database">Setup initial database</h3>
+
+<p>We need to setup the database and import the ABIs for the index
+service by running the following commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span> db
+<span class="nb">sleep </span>2
+docker-compose run <span class="nt">--rm</span> index createtables
+docker-compose run <span class="nt">--rm</span> index importabi
+</code></pre></div></div>
+
+<p>After that you can start the system with <code class="language-plaintext highlighter-rouge">docker-compose up -d</code>,
+though you have to wait for the blockchain node to sync with the
+trustlines blockchain in order to have a fully functioning system.</p>
+
+<p>The account you’ve setup at the beginning will have to pay for
+transactions. Please fund it with enough coins. You should now be able
+to connect to the local node via metamask to do that.</p>
+
+<h3 id="test-the-installation">Test the installation</h3>
+
+<p>Please try to run the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://localhost:5000/api/v1/networks
+</code></pre></div></div>
+
+<p>It should print some information about the networks as JSON.</p>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>The relay server provides a REST API. Please read <a href="https://github.com/trustlines-protocol/relay/blob/master/docs/RelayAPI.md">relay server API
+documentation</a>
+for more information.</p>
+
+<p>You can also use the clientlib to access the relay server from
+javascript. Please visit the <a href="https://github.com/trustlines-protocol/clientlib">clientlib github
+repository</a> for more
+information.</p>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>

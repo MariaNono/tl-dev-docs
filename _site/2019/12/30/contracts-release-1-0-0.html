@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Trustlines Developer Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="/assets/css/jquery.navgoco.css" type="text/css" media="screen" />
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Contracts release 1.0.0 | Trustlines</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Contracts release 1.0.0" />
+<meta name="author" content="Trustlines Foundation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Contracts version 1.0.0 was just released." />
+<meta property="og:description" content="Contracts version 1.0.0 was just released." />
+<link rel="canonical" href="http://localhost:4000/2019/12/30/contracts-release-1-0-0.html" />
+<meta property="og:url" content="http://localhost:4000/2019/12/30/contracts-release-1-0-0.html" />
+<meta property="og:site_name" content="Trustlines" />
+<meta property="og:image" content="http://localhost:4000/assets/images/ann.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-30T00:00:00+01:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/ann.jpg" />
+<meta property="twitter:title" content="Contracts release 1.0.0" />
+<meta name="twitter:site" content="@TrustlinesFound" />
+<meta name="twitter:creator" content="@Trustlines Foundation" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Trustlines Foundation"},"url":"http://localhost:4000/2019/12/30/contracts-release-1-0-0.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/12/30/contracts-release-1-0-0.html"},"headline":"Contracts release 1.0.0","dateModified":"2019-12-30T00:00:00+01:00","datePublished":"2019-12-30T00:00:00+01:00","image":"http://localhost:4000/assets/images/ann.jpg","description":"Contracts version 1.0.0 was just released.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://stats.trustlines.network/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+
+<body>
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+  <header id="header">
+    <a href="http://localhost:4000/" class="logo"><strong>Trustlines</strong> Dev Docs</a>
+    <ul class="icons">
+      
+      <li><a href="https://twitter.com/TrustlinesFound" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a href="https://github.com/trustlines-protocol" class="icon fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      
+      
+      
+      
+      <li><a href="https://reddit.com/r/Trustlines" class="icon fa-reddit" target="_blank"><span class="label">Reddit</span></a></li>
+      
+    </ul>
+  </header>
+
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Contracts release 1.0.0</h1>
+          </header>
+
+          
+          <span class="image main"><img src="http://localhost:4000/assets/images/ann.jpg" alt="" /></span>
+          
+
+          <p>Contracts version 1.0.0 was just released.
+<!--more--></p>
+
+<h2 id="version-0101"><a href="https://github.com/trustlines-protocol/contracts/releases/tag/1.0.0">Version 0.10.1</a></h2>
+
+<ul>
+  <li>Add function <code class="language-plaintext highlighter-rouge">cancelTrustlineUpdate(address counterparty)</code> to cancel a trustline update request in between msg.sender and counterparty.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">applyInterests</code> external function to manually apply interests</li>
+  <li>Change signature of functions <code class="language-plaintext highlighter-rouge">transfer</code>, <code class="language-plaintext highlighter-rouge">transferFrom</code>, <code class="language-plaintext highlighter-rouge">debitTransfer</code>, <code class="language-plaintext highlighter-rouge">transferReceiverPays</code>\
+so that it no longer takes <code class="language-plaintext highlighter-rouge">_to</code> argument but takes a complete path including sender and receiver (BREAKING)</li>
+  <li>Change: Lower the absolute max value of balances from <code class="language-plaintext highlighter-rouge">2**71 - 1</code> to <code class="language-plaintext highlighter-rouge">2**64 - 1</code> to match maximum transferable value</li>
+  <li>Change the way how to add authorized addresses to call <code class="language-plaintext highlighter-rouge">transferFrom</code>. Users can now add an authorized address\
+for themselves</li>
+  <li>Remove self destruct from Currency Network</li>
+  <li>Remove owner from Currency Network</li>
+  <li>Remove boolean return values from Currency Network functions.</li>
+  <li>Remove ERC20 related functions: <code class="language-plaintext highlighter-rouge">spendable</code>, <code class="language-plaintext highlighter-rouge">spendableTo</code>, <code class="language-plaintext highlighter-rouge">totalSupply</code>, and <code class="language-plaintext highlighter-rouge">balanceOf</code></li>
+  <li>Remove function <code class="language-plaintext highlighter-rouge">updateTrustlineDefaultInterests</code></li>
+  <li>Remove unused outstanding fees field in trustline (BREAKING)</li>
+  <li>Bugfix: emit Transfer event also on <code class="language-plaintext highlighter-rouge">closeTrustlineViaTriangularTransfer</code></li>
+  <li>Bugfix: Prevent overflows in <code class="language-plaintext highlighter-rouge">closeTrustlineViaTriangularTransfer</code></li>
+  <li>Bugfix: Prevent overflows in interests calculation</li>
+  <li>Bugfix: Prevent overflows in debt tracking</li>
+</ul>
+
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+<div id="sidebar">
+  <div class="inner">
+
+    <!-- Menu -->
+    <nav id="menu">
+      <header class="major">
+        <h2>Menu</h2>
+      </header>
+      <ul>
+        <li><a href="http://localhost:4000/">Home</a></li>
+        <ul class="nav">
+          <li><a href="#">Blockchain</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/blockchain/tlbc.html">Overview</a></li>
+              <li><a href="http://localhost:4000/docs/blockchain/nodes.html">Nodes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Client library</a>
+            <ul>
+              <li class="side_sub"><a href="http://localhost:4000/docs/clientlib/clientlib.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/clientlib/clientlib-guides.html">Guides</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/clientlib/clientlib-development.html">Development</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Smart contracts</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_README.html">Introduction</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/contracts_deployment.html">Deployment</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/deployed_contracts.html">Deployed contracts</a></li>
+              <li><a href="http://localhost:4000/docs/contracts/currency_networks_tlbc.html">Currency Networks</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#">Relay server</a>
+            <ul>
+              <li><a href="http://localhost:4000/docs/relay/relay_server.html">Intro</a></li>
+              <li><a href="http://localhost:4000/docs/relay/running_trustlines_system.html">Relay server guide</a></li>
+              <li><a href="http://localhost:4000/docs/relay/trustlines_docker.html">docker-compose solution</a></li>
+              <!-- <li><a href="http://localhost:4000/docs/relay/relay-api.html">Relay API</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <!-- Section -->
+    <section>
+      <header class="major">
+        <h2>Get in touch</h2>
+      </header>
+      <p>If you need help or just want to chat with other community members, join our community channels.</p>
+      <br>
+      <ul class="contact">
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/ghost.png" /><a href="https://blog.trustlines.network/" target="_blank">Trustlines Blog</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/discourse.svg" /><a href="https://forum.trustlines.network/" target="_blank">Trustlines Forum</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/gitter.svg" /><a href="https://gitter.im/trustlines/community">Trustlines Technical Chat on Gitter</a></li>
+        <li><img class="side_icon" src="http://localhost:4000/assets/images/telegram.svg" /><a href="https://twitter.com/TrustlinesFound">Trustlines Network Telegram</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">&copy; Trustlines Foundation. Design: <a href="https://html5up.net">HTML5 UP</a>.<br>Jekyll integration: <a href="https://andrewbanchi.ch">Andrew Banchich</a>.</p>
+    </footer>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="http://localhost:4000/assets/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/assets/js/skel.min.js"></script>
+  <script src="http://localhost:4000/assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="http://localhost:4000/assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="http://localhost:4000/assets/js/main.js"></script>
+	<!-- Load jquery.cookie plugin (optional) -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.cookie.js"></script>
+	<!-- Load jquery.navgoco plugin js and css files -->
+	<script type="text/javascript" src="http://localhost:4000/assets/js/jquery.navgoco.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		$('.nav').navgoco();
+	});
+</script>
+
+
+</body>
+
+</html>
